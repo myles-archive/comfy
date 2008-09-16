@@ -1,0 +1,55 @@
+{% extends "blog/base_blog.html" %}
+
+{% block title %}{{ block.super }}: {{ post.title }}{% endblock %}
+
+{% block content_title %}
+	<h2>{{ post.title }}</h2>
+	<p class="meta">By {{ post.author.name }} on {{ post.published }}</p>
+{% endblock %}
+
+{% block content %}
+	<div class="blog_post">
+		<div class="body">
+			{{ post.body|safe }}
+		</div>
+
+		<p class="tags">{% for tag in post.tags %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+	</div>
+	
+	<div id="comments">
+		<a name="comments"></a>
+		{% if post.comments %}
+			<h3>Comments</h3>
+			{% for comment in post.comments %}
+				<div class="comment">
+					<h4 class="name"><a name="c{{ comment.id }}" href="#c{{ comment.id }}">{{ forloop.counter }}</a> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> says...</h4>
+					{{ comment.comment|urlizetrunc:"60" }}
+					<p class="date">Posted on {{ comment.time }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+		
+		{% if post.allow_comments %}
+			<form action="{# blog_comment #}" method="post" accept-charset="utf-8">
+				<fieldset>
+					<legend>Post a comment</legend>
+					{{ form.as_p }}
+					<p><input type="submit" value="Post Comment"></p>
+				</fieldset>
+			</form>
+		{% endif %}
+	</div>
+	
+	{% if post.pings %}
+		<div id="pings">
+			<a name="pings"></a>
+			<h3>Pings</h3>
+			{% for ping in post.pings %}
+				<div class="ping">
+					<h4 class="name"><a name="p{{ ping.id }}" href="#{{ ping.id }}">{{ forloop.counter }}</a> <a href="{{ ping.uri }}">{{ ping.title }}</a></h4>
+					{{ ping.excerpt|linebreaks }}
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}
