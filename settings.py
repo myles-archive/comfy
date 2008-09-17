@@ -25,9 +25,9 @@ COUCHDB_SERVER = 'http://127.0.0.1:5984/'
 try:
 	SERVER = Server(COUCHDB_SERVER)
 	try:
-		DB = SERVER.create('comfy')
+		COUCHDB = SERVER.create('comfy')
 	except:
-		DB = SERVER['comfy']
+		COUCHDB = SERVER['comfy']
 except:
 	SERVER = None
 
@@ -88,8 +88,13 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-	'django.contrib.auth',
+	# 'django.contrib.auth',
 	# 'django.contrib.contenttypes',
 	# 'django.contrib.sessions',
 	# 'django.contrib.sites',
+	'comfy.apps.blog',
+	'comfy.apps.flatpages',
+	'comfy.apps.tumblelog',
+	'comfy.apps.wiki',
+	'comfy.apps.utils',
 )

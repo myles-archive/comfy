@@ -3,7 +3,7 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
-db = settings.DB
+db = settings.COUCHDB
 
 class Post(schema.Document):
 	type = schema.TextField(default='Post')

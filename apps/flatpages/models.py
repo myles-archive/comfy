@@ -5,15 +5,12 @@ from django.conf import settings
 
 db = settings.COUCHDB
 
-class Document(schema.Document):
-	type = schema.TextField(default='Wiki')
-	title = schema.TextField()
-	author = schema.DictField(schema.Schema.build(
-		name = schema.TextField(),
-		email = schema.TextField(),
-	))
-	body = schema.TextField()
-	tags = schema.ListField(schema.TextField())
+class FlatPage(schema.Document):
+	type = schema.TextField(default='FlatPage')
+	url = schema.TextField()
+	content = schema.TextField()
+	tempalte_name = schema.TextField()
+	registration_required = schema.BooleanField(default=False)
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -29,15 +26,6 @@ class Document(schema.Document):
 		comment = schema.TextField(),
 		time = schema.DateTimeField(),
 	)))
-	
-	def __unicode__(self):
-		return u"%s" % self.title
-	
-	@permalink
-	def get_absolute_url(self):
-		return ('wiki_detail', None, {
-			'title':	self.title,
-		})
 	
 	def store(self, db, update_timestamp=True):
 		if not self.created:

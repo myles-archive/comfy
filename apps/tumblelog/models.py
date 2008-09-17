@@ -3,15 +3,46 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
-db = settings.DB
+db = settings.COUCHDB
 
-class Audio(shema.Document):
+class Video(schema.Document):
+	type = schema.TextField(default='Tumblelog')
+	tumble_type = schema.TextField(default='Video')
+	service = schema.TextField(default=None)
+	
+	title = schema.TextField(default=None)
+	body = schema.TextField(default=None)
+	video = schema.TextField(default=None)
+	
+	created = schema.DateTimeField()
+	modified = schema.DateTimeField()
+	
+	# Comments
+	allow_comments = schema.BooleanField(default=True)
+	comments = schema.ListField(schema.DictField(schema.Schema.build(
+		author = schema.DictField(schema.Schema.build(
+			name = schema.TextField(),
+			email = schema.TextField(),
+			url = schema.TextField(),
+		)),
+		comment = schema.TextField(),
+		time = schema.DateTimeField(),
+	)))
+	
+	def store(self, db, update_timestamp=True):
+		if not self.created:
+			self.created = datetime.now()
+		if update_timestamp or not self.modified:
+			self.modified = datetime.now()
+		schema.Document.store(self, db)
+
+class Audio(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Audio')
 	service = schema.TextField(default=None)
 	
 	title = schema.TextField(default=None)
-	body = schema.TextField(defualt=None)
+	body = schema.TextField(default=None)
 	audio_url = schema.TextField(name='url')
 	
 	created = schema.DateTimeField()

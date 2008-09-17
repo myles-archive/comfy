@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from comfy.apps.blog.models import Post
 # from comfy.apps.blog.forms import 
 
-# db = settings.DB
+# db = settings.COUCHDB
 
 def index(request):
 	"""
