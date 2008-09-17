@@ -1,11 +1,17 @@
 from datetime import datetime, date
 from couchdb import schema
+
 from django.db.models import permalink
 from django.conf import settings
+
+from comfy.apps.utils.slugify import slugify
 
 db = settings.COUCHDB
 
 class Post(schema.Document):
+	"""
+	Blog post model.
+	"""
 	type = schema.TextField(default='Post')
 	title = schema.TextField()
 	slug = schema.TextField()
@@ -58,6 +64,8 @@ class Post(schema.Document):
 		})
 	
 	def store(self, db, update_timestamp=True):
+		if not self.slug:
+			self.slug = slugify(self.title)
 		if not self.created:
 			self.created = datetime.now()
 		if not self.published:
