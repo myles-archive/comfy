@@ -30,6 +30,9 @@ class Post(schema.Document):
 		)),
 		comment = schema.TextField(),
 		time = schema.DateTimeField(),
+		user_agent = schema.TextField(),
+		ip_address = schema.TextField(),
+		is_spam = schema.BooleanField(default=False),
 	)))
 	
 	# Ping

@@ -1,9 +1,10 @@
 {% extends "blog/base_blog.html" %}
+{% load i18n %}
 
 {% block title %}{{ block.super }}{% endblock %}
 
 {% block content_title %}
-	<h2>Blog</h2>
+	<h2>{% trans "Blog" %}</h2>
 {% endblock %}
 
 {% block content %}

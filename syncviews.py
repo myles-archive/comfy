@@ -29,9 +29,9 @@ class Command(NoArgsCommand):
 						views[view] = {}
 						for js in glob(os.path.join(path, view, '*.js')):
 							if os.path.basename(js) == 'map.js':
-								views[view]['map'] = os.open(js, os.O_RDONLY)
+								views[view]['map'] = open(js, 'rb').read()
 							if os.path.basename(js) == 'reduce.js':
-								views[view]['reduce'] = os.open(js, os.O_RDONLY)
+								views[view]['reduce'] = open(js, 'rb').read()
 						if verbosity >= 2:
 							print "add %s/%s" % (name, view)
 					try:
