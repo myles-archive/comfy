@@ -3,6 +3,9 @@ Comfy
 
 **Comfy** is a collection of [applications](#applications) that run [Myles Braithwaite](http://mylesbraithwaite.com/)'s personal website, it is written in the [Python](http://python.org/) web framework [Django](http://djangoproject.com/) and uses a mixtures of SQL and [CouchDB](http://incubator.apache.org/couchdb/) back ends.
 
+* [Issue Tracker](http://myles.lighthouseapp.com/projects/17139-comfy)
+* [Code Repository](http://github.com/myles/comfy/tree/master)
+
 ## Requirements
 
 * [Python](http://python.org/)
