@@ -77,24 +77,24 @@ class Post(schema.Document):
 	@classmethod
 	def all_months(cls):
 		return [datetime(row.key[0], row.key[1], 1) for row in
-			db.view('_view/posts/months', group=True)]
+			db.view('_view/blog/months', group=True)]
 	
 	@classmethod
 	def by_month(cls, **options):
-		return cls.view(db, '_view/posts/by_month', **options)
+		return cls.view(db, '_view/blog/by_month', **options)
 	
 	@classmethod
 	def by_slug(cls, **options):
-		return cls.view(db, '_view/posts/by_slug', **options)
+		return cls.view(db, '_view/blog/by_slug', **options)
 	
 	@classmethod
 	def by_tag(cls, **options):
-		return cls.view(db, '_view/posts/by_tag', **options)
+		return cls.view(db, '_view/blog/by_tag', **options)
 	
 	@classmethod
 	def by_time(cls, **options):
-		return cls.view(db, '_view/posts/by_time', **options)
+		return cls.view(db, '_view/blog/by_time', **options)
 	
 	@classmethod
 	def by_update(cls, **options):
-		return cls.view(db, '_view/posts/by_update', **options)
+		return cls.view(db, '_view/blog/by_update', **options)

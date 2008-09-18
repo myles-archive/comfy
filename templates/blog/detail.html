@@ -31,7 +31,7 @@
 		{% endif %}
 		
 		{% if post.allow_comments %}
-			<form action="{% url blog_add_comment %}" method="post" accept-charset="utf-8">
+			<form action="{% url post_comment %}" method="post" accept-charset="utf-8">
 				<fieldset>
 					<legend>{% trans "Post a comment" %}</legend>
 					{{ comment_form.as_p }}

@@ -1,3 +1,5 @@
+from urllib import quote_plus
+
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -6,7 +8,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from comfy.apps.blog.models import Post
-from comfy.apps.blog.forms import CommentForm
+from comfy.apps.comments.forms import CommentForm
 
 # db = settings.COUCHDB
 
@@ -37,16 +39,7 @@ def detail(request, year, month, day, slug):
 	
 	comment_form = CommentForm(initial={
 		'document_id':	post.id,
+		'next':			quote_plus(post.get_absolute_url())
 	})
 	
 	return render_to_response('blog/detail.html', { 'post': post, 'prev': prev, 'next': next, 'user': user, 'comment_form': comment_form }, context_instance=RequestContext(request))
-
-def add_comment(request):
-	if request.method == 'POST':
-		new_data = request.POST.copy()
-		form = CommentForm(new_data)
-		if form.is_valid():
-			post = form.save(user_agent=request.META['HTTP_USER_AGENT'], ip_address=request.META['REMOTE_ADDR'])
-			return HttpResponseRedirect(reverse('blog_index'))
-	
-	return HttpResponseRedirect(reverse('blog_index'))
