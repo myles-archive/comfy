@@ -3,6 +3,7 @@ from couchdb import schema
 
 from django.db.models import permalink
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from comfy.apps.utils.slugify import slugify
 
@@ -50,9 +51,6 @@ class Post(schema.Document):
 		author = schema.TextField(),
 		time = schema.DateTimeField(),
 	)))
-	
-	def __unicode__(self):
-		return u"%s" % self.title
 	
 	@permalink
 	def get_absolute_url(self):

@@ -10,13 +10,13 @@ Comfy
 
 * [Python](http://python.org/)
  * Tested on 2.5
-* [Django](http://djangoproject.com/)
+* [Django](http://djangoproject.com/) 1.0
 * [CouchDB](http://incubator.apache.org/couchdb/)
 * [couchdb-python](http://code.google.com/p/couchdb-python/)
 * A [django compatible database](http://docs.djangoproject.com/en/dev/ref/databases/#ref-databases):
  * This is currently required for the [Sites](http://docs.djangoproject.com/en/dev/ref/contrib/sites/#ref-contrib-sites) and [Authentication](http://docs.djangoproject.com/en/dev/topics/auth/#topics-auth) applications.
 
-## Installing
+## Installing - Everything
 
 1. Make sure the all [requirements](#requirements) are installed and running.
 1. Fill in the required information in the `./local_settings.py` file.

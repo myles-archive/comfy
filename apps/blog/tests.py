@@ -13,7 +13,7 @@ class PostTestCase(unittest.TestCase):
 		except:
 			self.db = self.server['comfy_blog_test']
 		
-		self.post1 = Post(title=u"Hello, World!", slug=u"foo-bar", published=datetime(2008, 8, 8), author={'name': 'Myles Braithwaite', 'email': 'me@mylesbraithwaite.com'})
+		self.post1 = Post(title=u"Hello, World!", slug=u"foo-bar", published=datetime(2008, 8, 8), author={'name': 'Myles Braithwaite', 'email': 'myles.braithwaite@example.com'})
 		self.post2 = Post(title=u"Hello, World!", published=datetime(2007, 7, 7))
 		self.post1.store(self.db)
 		self.post2.store(self.db)
@@ -27,7 +27,7 @@ class PostTestCase(unittest.TestCase):
 	
 	def testAddComment(self):
 		post = Post.load(self.db, self.post1.id)
-		post.comments.author = {'name': u"Myles Braithwaite", 'email': "me@mylesbraithwaite.com", 'url': u"http://mylesbraithwaite.com/"}
+		post.comments.author = {'name': u"Myles Braithwaite", 'email': "myles.braithwaite@example.com", 'url': u"http://mylesbraithwaite.com/"}
 		post.comments.comment = u"Hello, World!"
 		post.comments.time = datetime.now()
 		post.comments.user_agent = u"Python Unit Test"

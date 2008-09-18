@@ -79,6 +79,7 @@ INSTALLED_APPS = (
 	'comfy.apps.flatpages',
 	'comfy.apps.tumblelog',
 	'comfy.apps.wiki',
+	'comfy.apps.tags',
 	'comfy.apps.utils',
 )
 

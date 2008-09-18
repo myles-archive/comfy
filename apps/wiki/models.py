@@ -1,7 +1,9 @@
 from datetime import datetime, date
 from couchdb import schema
+
 from django.db.models import permalink
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 db = settings.COUCHDB
 
@@ -29,9 +31,6 @@ class Document(schema.Document):
 		comment = schema.TextField(),
 		time = schema.DateTimeField(),
 	)))
-	
-	def __unicode__(self):
-		return u"%s" % self.title
 	
 	@permalink
 	def get_absolute_url(self):
