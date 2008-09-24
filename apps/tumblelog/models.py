@@ -8,11 +8,20 @@ db = settings.COUCHDB
 class Video(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Video')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	title = schema.TextField(default=None)
 	body = schema.TextField(default=None)
 	video = schema.TextField(default=None)
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -39,11 +48,20 @@ class Video(schema.Document):
 class Audio(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Audio')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	title = schema.TextField(default=None)
 	body = schema.TextField(default=None)
 	audio_url = schema.TextField(name='url')
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -70,10 +88,19 @@ class Audio(schema.Document):
 class Chat(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Chat')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	title = schema.TextField(default=None)
 	dialogue = schema.TextField(name='body')
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -100,10 +127,19 @@ class Chat(schema.Document):
 class Text(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Text')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	title = schema.TextField(default=None)
 	body = schema.TextField()
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -130,12 +166,21 @@ class Text(schema.Document):
 class Image(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Image')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	title = schema.TextField(default=None)
 	url = schema.TextField()
 	link = schema.TextField(default=None)
 	tags = schema.ListField(schema.TextField())
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -162,11 +207,20 @@ class Image(schema.Document):
 class Quote(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Quote')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
 	quote = schema.TextField(name='body')
 	source = schema.TextField(default=None)
 	tags = schema.ListField(schema.TextField())
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
@@ -194,11 +248,20 @@ class Quote(schema.Document):
 class Link(schema.Document):
 	type = schema.TextField(default='Tumblelog')
 	tumble_type = schema.TextField(default='Link')
-	service = schema.TextField(default=None)
+	service = schema.DictField(schema.Schema.build(
+		name = schema.TextField(default=None),
+		url = schema.TextField(default=None),
+		profile_url = schema.TextField(default=None),
+	))
 	
-	title = schema.TextField(default=None)
+	title = schema.TextField()
 	body = schema.TextField(default=None)
 	tags = schema.ListField(schema.TextField())
+	
+	author = schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		email = schema.TextField(),
+	))
 	
 	uri = schema.TextField()
 	via_uri = schema.TextField(default=None)

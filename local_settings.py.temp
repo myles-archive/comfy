@@ -1,3 +1,8 @@
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'bwf%+o0lb*gki2d*h4n0$x%&h_4%^iz66qk-!hntcjr2m9necj'
+
+SITE_ID = 1
+
 AKISMET_API_KEY = ''
 
 COUCHDB_SERVER = ''

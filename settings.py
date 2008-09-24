@@ -3,6 +3,12 @@ import os, sys, logging
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 execfile(os.path.join(PROJECT_ROOT, 'local_settings.py'))
 
+logging.basicConfig(
+	level	= logging.DEBUG,
+	format	= '%(asctime)s %(levelname)s %(message)s',
+)
+logging.info("Loading settings file.")
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -23,8 +29,6 @@ TIME_ZONE = 'America/Chicago'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1
-
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -43,9 +47,6 @@ MEDIA_URL = '/media/'
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = MEDIA_URL + '/admin/'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'bwf%+o0lb*gki2d*h4n0$x%&h_4%^iz66qk-!hntcjr2m9necj'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
 	'django.template.loaders.filesystem.load_template_source',
@@ -54,6 +55,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+	'comfy.apps.flatpages.middleware.FlatpageFallbackMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,12 +77,15 @@ INSTALLED_APPS = (
 	'django.contrib.sites',
 	'django.contrib.admin',
 	'django.contrib.admindocs',
+	'django.contrib.humanize',
 	'comfy.apps.blog',
 	'comfy.apps.flatpages',
 	'comfy.apps.tumblelog',
 	'comfy.apps.wiki',
 	'comfy.apps.tags',
+	'comfy.apps.talks',
 	'comfy.apps.utils',
+	'comfy.apps.redirects',
 )
 
 DEFAULT_USER_AGENT = "Comfy/0.1 (http://mylesbraithwaite.com/)"
@@ -92,12 +97,16 @@ MONTH_DAY_FORMAT = 'j F'
 
 LOGIN_REDIRECT_URL = '/'
 
-from couchdb import Server
+from couchdb import Server, ResourceConflict
+from socket import error as SocketError
 try:
 	SERVER = Server(COUCHDB_SERVER)
 	try:
 		COUCHDB = SERVER.create(COUCHDB_DATABASE)
-	except:
-		COUCHDB = SERVER['comfy']
-except:
+		logging.info("Need to created the database %s" % COUCHDB_DATABASE)
+	except ResourceConflict:
+		COUCHDB = SERVER[COUCHDB_DATABASE]
+except SocketError:
+	logging.error("Could not connect to the CouchDB server at %s." % COUCHDB_SERVER)
 	SERVER = None
+	COUCHDB = None

@@ -17,7 +17,12 @@ def flatpage(request, url):
 	if not url.startswith('/'):
 		url = "/" + url
 	
-	f = list(FlatPage.by_url()[(url)])[0]
+	flatpages = list(FlatPage.by_url()[(url)])
+	
+	try:
+		f = flatpages[0]
+	except:
+		raise Http404
 	
 	# If registration is required for accessing this page, and the user isn't
 	# logged in, redirect to the login page.

@@ -8,8 +8,9 @@ db = settings.COUCHDB
 class FlatPage(schema.Document):
 	type = schema.TextField(default='FlatPage')
 	url = schema.TextField()
+	title = schema.TextField()
 	content = schema.TextField()
-	tempalte_name = schema.TextField()
+	template_name = schema.TextField()
 	registration_required = schema.BooleanField(default=False)
 	
 	created = schema.DateTimeField()
@@ -33,3 +34,10 @@ class FlatPage(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
+	
+	def get_absolute_url(self):
+		return self.url
+	
+	@classmethod
+	def by_url(cls, **options):
+		return cls.view(db, '_view/flatpages/by_url', **options)
