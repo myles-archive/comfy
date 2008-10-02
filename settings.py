@@ -86,6 +86,8 @@ INSTALLED_APPS = (
 	'comfy.apps.talks',
 	'comfy.apps.utils',
 	'comfy.apps.redirects',
+	'comfy.apps.notes',
+	'comfy.apps.bookmarks',
 )
 
 DEFAULT_USER_AGENT = "Comfy/0.1 (http://mylesbraithwaite.com/)"
@@ -97,7 +99,7 @@ MONTH_DAY_FORMAT = 'j F'
 
 LOGIN_REDIRECT_URL = '/'
 
-from couchdb import Server, ResourceConflict
+from couchdb import Server, ResourceConflict, ServerError
 from socket import error as SocketError
 try:
 	SERVER = Server(COUCHDB_SERVER)
@@ -105,6 +107,8 @@ try:
 		COUCHDB = SERVER.create(COUCHDB_DATABASE)
 		logging.info("Need to created the database %s" % COUCHDB_DATABASE)
 	except ResourceConflict:
+		COUCHDB = SERVER[COUCHDB_DATABASE]
+	except ServerError:
 		COUCHDB = SERVER[COUCHDB_DATABASE]
 except SocketError:
 	logging.error("Could not connect to the CouchDB server at %s." % COUCHDB_SERVER)

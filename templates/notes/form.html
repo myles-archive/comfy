@@ -1,0 +1,27 @@
+{% extends 'notes/base.html' %}
+ 
+{% block class %} class="lone_form"{% endblock %}
+ 
+{% block content %}
+	{% if note %}
+		<h1>Editing Entry from <strong>{{ note.created }} <!-- TODO |date:"l, F j, Y" --></strong> at <strong>{{ note.created }} <!-- TODO |date:"g:i a" --></strong></h1>
+	{% endif %}
+	<form action="." method="post">
+		<div>
+			{{ form.body.errors }}
+			{{ form.body }}
+		</div>
+		<div class="tags">
+			{{ form.tags.errors }}
+			{{ form.tags }}
+		</div>
+		<div class="button">
+			<a href="{% url notes_index %}">Cancel</a>
+		{% if note %}
+			<input type="submit" value="ReLog It">
+		{% else %}
+			<input type="submit" value="Log It">
+		{% endif %}
+		</div><!-- .button -->
+	</form>
+{% endblock %}

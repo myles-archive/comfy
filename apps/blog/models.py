@@ -27,6 +27,16 @@ class Post(schema.Document):
 	created = schema.DateTimeField()
 	modified = schema.DateTimeField()
 	
+	# License
+	# license = schema.DictField(schema.Schema.build(
+	# 	name = schema.TextField(),
+	# 	organization = schema.TextField(defualt=None),
+	# 	abbreviation = schema.TextField(default=None),
+	# 	url = schema.TextField(default=None),
+	# 	logo = schema.TextField(default=None),
+	# 	description = schema.TextField(default=None)
+	# ))
+	
 	# Comments
 	allow_comments = schema.BooleanField(default=True)
 	comments = schema.ListField(schema.DictField(schema.Schema.build(
@@ -54,20 +64,20 @@ class Post(schema.Document):
 	
 	@permalink
 	def get_absolute_url(self):
-		return ('blog_detail', None, {
+		return ('post_detail', None, {
 			'year':		self.published.year,
 			'month':	self.published.month,
 			'day':		self.published.day,
 			'slug':		self.slug,
 		})
 	
-	def store(self, db, update_timestamp=True):
+	def store(self, update_timestamp=True):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		if not self.created:
 			self.created = datetime.now()
 		if not self.published:
-			self.published = date.now()
+			self.published = date.today()
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)

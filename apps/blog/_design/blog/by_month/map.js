@@ -4,8 +4,9 @@ function(doc) {
 		var month = parseInt(doc.published.substr(5, 2), 10);
 		var day = parseInt(doc.published.substr(8, 2), 10);
 		emit([year, month, day, doc.published], {
-			slug: doc.slug, title: doc.title, author: doc.author, summary: doc.summary,
-			published: doc.published, updated: doc.updated, tags: doc.tags
+			slug: doc.slug, title: doc.title, author: doc.author,
+			published: doc.published, updated: doc.updated, tags: doc.tags,
+			body: doc.body
 		});
 	}
 }

@@ -1,9 +1,13 @@
 from couchdb import schema
 
+from django.comf import settings
+
+db = settings.COUCHDB
+
 class Tag(schema.Document):
 	tags = schema.ListField(schema.TextField())
 	
-	def store(self, db):
+	def store(self):
 		schema.Document.store(self, db)
 	
 	@classmethod

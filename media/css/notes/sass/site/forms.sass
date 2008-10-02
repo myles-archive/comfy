@@ -1,0 +1,106 @@
+/* ---------- site/forms.sass ----------
+
+// Search Form
+#search
+  +floatclear
+  :text-align center
+  :background #191919
+  a
+    :float right
+    :padding 3px 10px
+    :color = !mid_gray
+    :text-transform uppercase
+    :font-size 11px
+    &:hover
+      :text-decoration underline
+  form
+    :padding 30px 0 20px
+
+    input[type=text]
+      :padding 3px 7px
+      :font-size 25px
+      :width 400px
+      :color #888
+      :border 1px solid #ccc
+      :-moz-border-radius 5px
+      :-webkit-border-radius 5px
+
+// Form on a page by itself
+// & Delete confirmation
+.lone_form,
+.entry_delete
+  #main
+    :padding-bottom 10px
+    :background none
+    :border none
+    form
+      :border none
+.entry_delete
+  #main form
+    +reset
+    +permalink_style
+    input
+      :margin 10px 30px 0 0
+    .tags
+      :margin 10px 0 0 20px
+      span
+        :color = !almost_white
+    
+
+// Log Entry Form
+#main
+
+  form
+    :padding 8px 20px 0
+    :padding-bottom 0
+    :border-bottom 10px solid #ccc
+    :background = !mid_gray
+
+    textarea,
+    .tags input
+      :color = !mid_gray
+      :-webkit-border-radius 6px
+      :-moz-border-radius 6px
+
+    a
+      +small_link
+
+    div
+      :margin-bottom 10px
+      &.tags,
+      &.button
+        :margin-bottom 15px
+
+    .tags
+      :float left
+      :position relative
+      
+      a
+        :display block
+        :padding-top 5px
+      
+      input
+        :width 200px
+        :position absolute
+        :top -2px
+        :padding 3px
+
+    .button
+      :float right
+
+      input
+        :width 150px
+
+    textarea
+      :padding 5px
+      :width 628px
+      :border-color #ccc
+      :font
+        :family Monaco
+        :size 12px
+
+    ul.errorlist li
+      +reset
+      :color darkred
+      :text-transform uppercase
+      :list-style-type none

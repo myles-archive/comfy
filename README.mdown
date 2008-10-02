@@ -86,3 +86,7 @@ A collection of documents.
 ### Utils
 
 A collection of utilities to help the other applications.
+
+### Notes
+
+A place to jot down notes.

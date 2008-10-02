@@ -1,0 +1,70 @@
+{% extends 'notes/base.html' %}
+{% load humanize %}
+ 
+{% block class %}{% if has_previous %} class="paginated"{% endif %}{% endblock %}
+ 
+{% block search %}
+	<div id="search">
+		<form action="{# url notes_search #}" method="get" accept-charset="utf-8">
+			<div><label for="s">Search</label><input type="text" value="" name="s" id="s" /></div>
+		</form>
+	</div><!-- #search -->
+{% endblock %}
+ 
+{% block header %}
+	{% if has_previous %}
+		<div id="add">
+			<a href="{% url notes_index %}">New Entry</a>
+		</div><!-- #add -->
+	{% endif %}
+{% endblock %}
+ 
+{% block content %}  
+	{% if not has_previous %}
+		{% if form %}
+			<form action="." method="post">
+				<div>
+					{{ form.body.errors }}
+					{{ form.body }}
+				</div>
+				<div class="tags">
+					{{ form.tags.errors }}
+					{{ form.tags }}
+				</div>
+				<div class="button"><input type="submit" value="Log It"></div>
+			</form>
+		{% endif %}
+	{% endif %}
+	 
+	<div id="entries">
+		{% for entry in notes %}
+			{% ifchanged %}<h2>{{ entry.created|title }} <!-- TODO |naturalday:"l, F j, Y" --></h2>{% endifchanged %}
+			<div class="entry">
+				<div class="meta">
+					{% if form %}<span class="delete"><a href="{{ entry.get_delete_url }}">&otimes;</a></span>{% endif %}
+					<span class="date">
+					  <a href="{{ entry.get_absolute_url }}">{{ entry.created }}<!-- TODO Add |date:"g:i a" --></a>
+					</span>
+				</div>
+				<div class="content">
+					{{ entry.body|linebreaks }}
+				</div><!-- .content -->
+			</div>
+		{% endfor %}
+	</div><!-- #entries -->
+	{% endblock %}
+	 
+	{% block navigation %}
+	<div id="nav">
+	{% if is_paginated %}
+		{% if has_next %}
+		<a class="older" href="/chiplog/page/{{ next }}/">Older</a>
+		{% endif %}
+		{% if has_previous %}
+		<a class="newer" href="/chiplog/page/{{ previous }}/">Newer</a>
+		{% endif %}
+	{% else %}
+	<div class="empty_nav"></div>
+	{% endif %}
+	</div><!-- #nav -->
+{% endblock %}

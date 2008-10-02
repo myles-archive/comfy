@@ -1,0 +1,27 @@
+{% extends "blog/base_blog.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} archive for {{ month|date:"F Y" }}{% endblock %}
+
+{% block content_title %}
+	<h2>{% trans "Blog" %} {% trans "archive for" %} {{ month|date:"F Y" }}</h2>
+{% endblock %}
+
+{% block content %}
+	<div id="blog_posts">
+		{% if next or prev %}
+			<p class="front_back">
+				{% if prev %}&#x2190; <a href="{% url post_archive_month prev.year prev.month %}">{{ prev|date:"F Y" }}</a>{% endif %}{% if next and prev %} - {% endif %}{% if next %}<a href="{% url post_archive_month next.year next.month %}">{{ next|date:"F Y" }}</a> &#x2192;{% endif %}
+			</p>
+		{% endif %}
+		{% for post in posts %}
+			<div class="blog_post">
+				<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+				<p class="meta">By {{ post.author.name }} on {{ post.published }}</p>
+				<div class="body">
+					{{ post.body|safe }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

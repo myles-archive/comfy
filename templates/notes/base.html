@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>{% block title %}Notes{% endblock %}</title>
+		<link rel="stylesheet" href="{{ MEDIA_URL }}css/notes/screen.css" type="text/css" media="screen">
+		<script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}js/jquery.js"></script>
+		<script src="{{ MEDIA_URL }}js/jquery.toggleval.js" type="text/javascript"></script>
+		<script src="{{ MEDIA_URL }}js/jquery.timeago.js" type="text/javascript"></script>
+		<script src="{{ MEDIA_URL }}js/notes/load.js" type="text/javascript"></script>
+	</head>
+	<body id="{% block body_id %}{% endblock %}">
+		{% block search %}{% endblock %}
+		<div id="wrapper"{% block class %}{% endblock %}>
+			<div id="header">
+				{% block header %}{% endblock %}
+			</div><!-- #header -->
+			<div id="main">
+				<div id="primary">
+				  {% block content %}{% endblock %}
+				</div><!-- #primary -->
+			</div><!-- #main -->
+			{% block navigation %}{% endblock %}
+		</div><!-- #wrapper -->
+	</body>
+</html>

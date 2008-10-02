@@ -1,6 +1,10 @@
 from couchdb import schema
 
+from django.comf import settings
+
 from comfy.apps.utils.slugify import slugify
+
+db = settings.COUCHDB
 
 class Book(schema.Document):
 	type = schema.TextField(default=u"Books")
@@ -56,7 +60,7 @@ class Book(schema.Document):
 			'slug':		self.slug,
 		})
 	
-	def store(self, db, update_timestamp=True):
+	def store(self, update_timestamp=True):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		if not self.created:

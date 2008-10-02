@@ -1,0 +1,9 @@
+Comfy - Notes
+=============
+
+**Comfy Notes** is a basically an area where I can jot down notes that contain a time stamp and are taggable.
+
+Thanks To
+---------
+
+ * [Trey Piepmeier](http://treypiepmeier.com/) for his [Chiplog](http://treypiepmeier.com/code/chiplog/)

@@ -31,5 +31,5 @@ class Comment(schema.Document):
 			'document_id':	self.id,
 		})
 	
-	def store(self, db):
+	def store(self):
 		schema.Document.store(self, db)

@@ -1,0 +1,130 @@
+/* ---------- site/main.sass ----------
+
+body
+  :font 14px "Gill Sans", Helvetica, sans-serif
+  :padding-bottom 40px
+  :background = !body_bg
+
+#wrapper
+  :width 680px
+  :margin 30px auto
+  :-moz-border-radius 13px
+  :-webkit-border-radius 13px
+  :background = !mid_gray
+
+#header
+  :padding 5px 19px 5px 20px
+  .paginated &
+    :border-bottom
+      :width 4px
+      :style solid
+      :color = !header_border
+  a
+    :display block
+    :padding 5px 0
+    :color = !light_gray
+    &:hover
+      :text-decoration underline
+  #add
+    :float left
+
+#main
+  +reset
+  :border-bottom 10px solid #ccc
+  :clear both
+  :background = !main_bg
+  :color = !light_gray
+
+  .paginated &,
+  .search &
+    :border-top 10px solid #ccc
+
+  .entry_detail &
+    +permalink_style
+    :padding-bottom 10px
+    :background none
+    :border none
+    .tags
+      :margin 10px 0 0 20px
+      :padding 10px 0
+      span
+        :color = !almost_white
+    #edit
+      :width 100px
+      :float right
+      :margin 10px 20px 10px 0
+      :text-align right
+      a
+        +small_link
+  h1
+    :font-size 20px
+    :padding 10px 20px
+    :color = !yellow
+    :font-weight normal
+    strong
+      :font-weight normal
+      :padding-bottom 1px
+      :border-bottom
+        :color = !yellow
+        :style solid
+        :width 1px
+  h2
+    :margin 15px 400px 25px 0
+    :padding 5px 20px 7px
+    :font
+      :weight normal
+      :size 16px
+    :border-bottom
+      :width 2px
+      :style solid
+      :color = !date_border
+  a
+    :color = !blue
+    &:hover
+      :color = !blue_fg
+      
+  #entries
+    :margin 20px 0
+  
+    .entry
+      :margin 10px 20px
+      
+      .delete a
+        :color = !red
+        &:hover
+          :text-decoration none
+          :color = !red_fg
+  
+#nav
+  +floatclear
+  a
+    :float left
+    :margin 8px 20px 10px
+    :padding 5px 14px
+    :font-size 16px
+    :color #838383
+    :text-transform uppercase
+    :background #c0c0c0
+    :-moz-border-radius 5px
+    :-webkit-border-radius 5px
+    &.older
+      :float right
+    &:hover
+      :color #777
+      :background #ccc
+    &:active
+      :position relative
+      :top 1px
+
+  .empty_nav
+    :height 20px
+
+#header,
+#main,
+#main form,
+#main form div,
+#primary,
+#secondary,
+.primary,
+.secondary
+  +floatclear

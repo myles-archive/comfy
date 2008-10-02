@@ -52,7 +52,7 @@ def post(request):
 				document.comments.comment = form.cleaned_data["comment"]
 				document.comments.is_spam = is_spam
 				document.comments.time = datetime.now()
-				document.store(db)
+				document.store()
 			else:
 				return HttpResponseRedirect(comments_closed_redirect)
 			

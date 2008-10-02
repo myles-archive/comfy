@@ -45,5 +45,5 @@ def flatpage(request, url):
 		'flatpage': f,
 	})
 	response = HttpResponse(t.render(c))
-	populate_xheaders(request, response, FlatPage, f.id)
+	# populate_xheaders(request, response, FlatPage, f.id)
 	return response

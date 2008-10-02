@@ -1,8 +1,11 @@
 from couchdb import schema
 
 from django.db.models import permalink
+from django.conf import settings
 
 from comfy.apps.utils.slugify import slugify
+
+db = settings.COUCHDB
 
 class Presentation(schema.Document):
 	type = schema.TextField(default='Presentation')
@@ -61,13 +64,13 @@ class Presentation(schema.Document):
 			'slug':		self.slug,
 		})
 	
-	def store(self, db, update_timestamp=True):
+	def store(self, update_timestamp=True):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		if not self.created:
 			self.created = datetime.now()
 		if not self.published:
-			self.published = date.now()
+			self.published = date.today()
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)

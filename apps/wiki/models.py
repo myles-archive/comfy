@@ -38,7 +38,7 @@ class Document(schema.Document):
 			'title':	self.title,
 		})
 	
-	def store(self, db, update_timestamp=True):
+	def store(self, update_timestamp=True):
 		if not self.created:
 			self.created = datetime.now()
 		if update_timestamp or not self.modified:
