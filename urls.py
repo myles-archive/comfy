@@ -7,6 +7,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	url(r'^$',
+		view	= 'comfy.apps.tumblelog.views.index',
+		name	= 'homepage',
+	),
 	(r'^blog/', include('comfy.apps.blog.urls')),
 	(r'^comments/', include('comfy.apps.comments.urls')),
 	(r'^notes/', include('comfy.apps.notes.urls')),

@@ -1,0 +1,9 @@
+{% load couchdb humanize %}
+
+<div class="blog_post">
+	<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+	<p class="meta alt">By {{ post.author.name|default_if_none:"Anonymous" }} on {{ post.published|convert_date|naturalday|title }}</p>
+	<div class="body">
+		{{ post.body|linebreaks }}
+	</div>
+</div>

@@ -1,44 +1,20 @@
 {% extends "blog/base_blog.html" %}
-{% load i18n %}
+{% load i18n couchdb humanize %}
 
 {% block title %}{{ block.super }}: {{ post.title }}{% endblock %}
 
 {% block content_title %}
 	<h2>{{ post.title }}</h2>
-	<p class="meta">By {% if user %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ post.author.name }}{% endif %} on {{ post.published }}</p>
+	<p class="meta alt">By {% if user %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ post.author.name|default_if_none:"Anonymous" }}{% endif %} on {{ post.published|convert_date|naturalday|title }}</p>
 {% endblock %}
 
 {% block content %}
 	<div class="blog_post">
 		<div class="body">
-			{{ post.body|safe }}
+			{{ post.body|linebreaks }}
 		</div>
-
-		<p class="tags">{% for tag in post.tags %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-	</div>
-	
-	<div id="comments">
-		<a name="comments"></a>
-		{% if post.comments %}
-			<h3>{% trans "Comments" %}</h3>
-			{% for comment in post.comments %}
-				<div class="comment">
-					<h4 class="name"><a name="c{{ comment.id }}" href="#c{{ comment.id }}">{{ forloop.counter }}</a> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> says...</h4>
-					{{ comment.comment|urlizetrunc:"60" }}
-					<p class="date">{% trans "Posted on " %}{{ comment.time }}</p>
-				</div>
-			{% endfor %}
-		{% endif %}
 		
-		{% if post.allow_comments %}
-			<form action="{% url post_comment %}" method="post" accept-charset="utf-8">
-				<fieldset>
-					<legend>{% trans "Post a comment" %}</legend>
-					{{ comment_form.as_p }}
-					<p><input type="submit" value="{% trans "Post Comment" %}"></p>
-				</fieldset>
-			</form>
-		{% endif %}
+		<p class="tags alt">{% for tag in post.tags %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 	</div>
 	
 	{% if post.pings %}
@@ -53,4 +29,39 @@
 			{% endfor %}
 		</div>
 	{% endif %}
+	
+	<div id="comments">
+		<a name="comments"></a>
+		{% if post.comments %}
+			<h3>{% trans "Comments" %}</h3>
+			{% for comment in post.comments %}
+				<div class="comment">
+					<h4 class="name"><a name="c{{ forloop.counter }}" href="#c{{ forloop.counter }}">{{ forloop.counter }}</a> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> says...</h4>
+					{{ comment.comment|urlizetrunc:"60" }}
+					<p class="date alt">{% trans "Posted on " %}{{ comment.time|convert_datetime|naturalday|title }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+		
+		{% if post.allow_comments %}
+			<form action="{% url post_comment %}" method="post" accept-charset="utf-8" class="vform">
+				<fieldset>
+					<legend>{% trans "Post a comment" %}</legend>
+					{{ comment_form.document_id }}
+					{{ comment_form.next }}
+					<label for="id_author_name">{{ comment_form.author_name.label }}</label>
+					{{ comment_form.author_name }}
+					<label for="id_author_email">{{ comment_form.author_email.label }}</label>
+					{#
+						TODO Need to work on the form here. http://www.cssdemos.com/2007/12/29/hands-on-with-blueprint-a-css-framework/
+					#}
+					{{ comment_form.author_email }}
+					{{ comment_form.author_url }}
+					{{ comment_form.comment }}
+					{{ comment_form.as_p }}
+					<p><input type="submit" value="{% trans "Post Comment" %}"></p>
+				</fieldset>
+			</form>
+		{% endif %}
+	</div>
 {% endblock %}

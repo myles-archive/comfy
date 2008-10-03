@@ -1,0 +1,21 @@
+{% extends "blog/base_blog.html" %}
+{% load i18n humanize %}
+
+{% block title %}{{ block.super }} {% trans "archive for" %} {{ day|naturalday|title }}{% endblock %}
+
+{% block content_title %}
+	<h2>{% trans "Blog" %} {% trans "archive for" %} {{ day|naturalday|title }}</h2>
+{% endblock %}
+
+{% block content %}
+	<div id="blog_posts">
+		{% if next or prev %}
+			<p class="front_back">
+				{% if prev %}&#x2190; <a href="{% url post_archive_day prev.year prev.month prev.day %}">{{ prev|naturalday }}</a>{% endif %}{% if next and prev %} - {% endif %}{% if next %}<a href="{% url post_archive_day next.year next.month next.day %}">{{ next|naturalday|title }}</a> &#x2192;{% endif %}
+			</p>
+		{% endif %}
+		{% for post in posts %}
+			{% include "blog/_post.html" %}
+		{% endfor %}
+	</div>
+{% endblock %}

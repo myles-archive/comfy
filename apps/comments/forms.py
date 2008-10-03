@@ -13,3 +13,11 @@ class CommentForm(forms.Form):
 	author_email	= forms.EmailField(label=u"Email", help_text=u"We will not publish your email address.")
 	author_url		= forms.URLField(label=u"URL", required=False)
 	comment			= forms.CharField(label=u"Comment", widget=forms.Textarea)
+
+class PingForm(forms.Form):
+	document_id		= forms.CharField(widget=forms.HiddenInput)
+	uri				= forms.CharField()
+	title			= forms.CharField()
+	excerpt			= forms.CharField()
+	author			= forms.CharField()
+	time			=  forms.CharField()

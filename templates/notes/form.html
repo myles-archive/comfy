@@ -1,10 +1,13 @@
 {% extends 'notes/base.html' %}
- 
+{% load couchdb humanize %}
+
 {% block class %} class="lone_form"{% endblock %}
+
+{% block title %}{{ block.super }} - Editing {{ note.body|truncatewords_html:5 }}{% endblock %}
  
 {% block content %}
 	{% if note %}
-		<h1>Editing Entry from <strong>{{ note.created }} <!-- TODO |date:"l, F j, Y" --></strong> at <strong>{{ note.created }} <!-- TODO |date:"g:i a" --></strong></h1>
+		<h1>Editing Entry from <strong>{{ note.created|convert_datetime|naturalday }}</strong> at <strong>{{ note.created|convert_datetime|date:"g:i a"  }}</strong></h1>
 	{% endif %}
 	<form action="." method="post">
 		<div>

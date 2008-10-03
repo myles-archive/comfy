@@ -90,12 +90,14 @@ INSTALLED_APPS = (
 	'comfy.apps.bookmarks',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+	'django.core.context_processors.auth',
+	'django.core.context_processors.media',
+	'comfy.apps.utils.context_processors.standard',
+)
+
 DEFAULT_USER_AGENT = "Comfy/0.1 (http://mylesbraithwaite.com/)"
 URL_VALIDATOR_USER_AGENT = DEFAULT_USER_AGENT
-
-YEAR_MONTH_FORMAT = 'F Y'
-TIME_FORMAT = 'P'
-MONTH_DAY_FORMAT = 'j F'
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -114,3 +116,9 @@ except SocketError:
 	logging.error("Could not connect to the CouchDB server at %s." % COUCHDB_SERVER)
 	SERVER = None
 	COUCHDB = None
+
+DATE_FORMAT = 'l, j F, Y'
+TIME_FORMAT = 'g:i a'
+YEAR_MONTH_FORMAT = 'F Y'
+MONTH_DAY_FORMAT = 'j F'
+DATETIME_FORMAT = DATE_FORMAT + TIME_FORMAT

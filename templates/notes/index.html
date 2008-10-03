@@ -1,5 +1,5 @@
 {% extends 'notes/base.html' %}
-{% load humanize %}
+{% load humanize couchdb %}
  
 {% block class %}{% if has_previous %} class="paginated"{% endif %}{% endblock %}
  
@@ -38,12 +38,12 @@
 	 
 	<div id="entries">
 		{% for entry in notes %}
-			{% ifchanged %}<h2>{{ entry.created|title }} <!-- TODO |naturalday:"l, F j, Y" --></h2>{% endifchanged %}
+			{% ifchanged %}<h2>{{ entry.created|convert_datetime|naturalday|title }}</h2>{% endifchanged %}
 			<div class="entry">
 				<div class="meta">
 					{% if form %}<span class="delete"><a href="{{ entry.get_delete_url }}">&otimes;</a></span>{% endif %}
 					<span class="date">
-					  <a href="{{ entry.get_absolute_url }}">{{ entry.created }}<!-- TODO Add |date:"g:i a" --></a>
+					  <a href="{{ entry.get_absolute_url }}">{{ entry.created|convert_datetime|date:"g:i a" }}</a>
 					</span>
 				</div>
 				<div class="content">

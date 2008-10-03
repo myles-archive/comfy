@@ -61,3 +61,5 @@ def post(request):
 			return HttpResponseRedirect(error_redirect)
 	
 	return HttpResponseBadRequest()
+
+# TODO Add the Ping XML-RPC interface here.

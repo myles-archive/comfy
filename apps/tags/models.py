@@ -1,6 +1,6 @@
 from couchdb import schema
 
-from django.comf import settings
+from django.conf import settings
 
 db = settings.COUCHDB
 

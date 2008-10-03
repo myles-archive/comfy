@@ -5,6 +5,7 @@ from django.db.models import permalink
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
+from comfy.apps.blog.signals import post_stored
 from comfy.apps.utils.slugify import slugify
 
 db = settings.COUCHDB
@@ -81,6 +82,7 @@ class Post(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
+		post_stored.send()
 	
 	@classmethod
 	def all_months(cls):

@@ -10,13 +10,7 @@
 {% block content %}
 	<div id="blog_posts">
 		{% for post in posts %}
-			<div class="blog_post">
-				<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-				<p class="meta">By {{ post.author.name }} on {{ post.published }}</p>
-				<div class="body">
-					{{ post.body|safe }}
-				</div>
-			</div>
+			{% include "blog/_post.html" %}
 		{% endfor %}
 	</div>
 {% endblock %}

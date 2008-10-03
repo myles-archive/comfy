@@ -4,10 +4,51 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{% block title %}Myles Braithwaite{% endblock %}</title>
+	<title>{% block title %}{{ site_name }}{% endblock %}</title>
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css" type="text/css" media="all">
+	<!--[if IE]><link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 </head>
-<body>
-	{% block content_title %}{% endblock %}
-	{% block content %}{% endblock %}
+<body id="section_{{ section }}">
+	<div class="container">
+		<div class="span-24" id="header">
+			<h1 id="site_name">{{ site_name }}</h1>
+			<hr>
+			<h2 class="alt">Just another Python Geek.</h2>
+			<ul class="tabs" id="navigation">{% include "_tabs.html" %}</ul>
+			<hr>
+		</div><!-- .span-24 #header -->
+		
+		<hr class="space">
+		
+		<div class="span-15 prepend-1 colborder" id="body">
+			{% block content_title %}{% endblock %}
+			{% block content %}{% endblock %}
+		</div><!-- .span-15 .prepend-1 .colborder -->
+		
+		<div class="span-7 last" id="sidebar">
+			<!-- Sidebar -->
+		</div><!-- .span7 .last -->
+		
+		<hr>
+		<div class="span-7 colborder">
+			<h6>Here's a box</h6>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+		</div><!-- .span-7 .colborder -->
+		
+		<div class="span-8 colborder">
+			<h6>And another box</h6>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat laboris nisi ut aliquip.</p>
+		</div><!-- .span-8 .colborder -->
+		
+		<div class="span-7 last">
+			<h6>This box is aligned with the sidebar</h6>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+		</div><!-- .span-7 .last -->
+		<hr>
+		
+		<div id="footer" class="span-24">
+			<ul class="tabs">{% include "_tabs.html" %}</ul>
+		</div><!-- .span-24 #footer -->
+	</div><!-- .container -->
 </body>
 </html>

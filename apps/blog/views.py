@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from urllib import quote_plus
 from itertools import groupby
 
@@ -24,9 +24,33 @@ def index(request):
 	
 	return render_to_response('blog/index.html', context, context_instance=RequestContext(request))
 
+def archive_year(request, year):
+	"""
+	The weblog archive page for a given year.
+	"""
+	posts = []
+	prev = next = None
+	for year_time, lst in groupby(Post.by_month(), lambda x: x.published.year):
+		if year_time == int(year):
+			posts = list(lst)
+		elif not posts:
+			prev = year_time
+		else:
+			next = year_time
+			break
+	
+	context = {
+		'posts':	posts,
+		'year':		date(int(year), 1, 1),
+		'prev':		prev and date(prev, 1, 1) or None,
+		'next':		next and date(next, 1, 1) or None
+	}
+	
+	return render_to_response('blog/archive_year.html', context, context_instance=RequestContext(request))
+
 def archive_month(request, year, month):
 	"""
-	The weblog arichve page for a given year.
+	The weblog archive page for a given month.
 	"""
 	posts = []
 	prev = next = None
@@ -41,12 +65,36 @@ def archive_month(request, year, month):
 	
 	context = {
 		'posts':	posts,
-		'month':	datetime(int(year), int(month), 1),
-		'prev':		prev and datetime(prev[0], prev[1], 1) or None,
-		'next':		next and datetime(next[0], next[1], 1) or None
+		'month':	date(int(year), int(month), 1),
+		'prev':		prev and date(prev[0], prev[1], 1) or None,
+		'next':		next and date(next[0], next[1], 1) or None
 	}
 	
 	return render_to_response('blog/archive_month.html', context, context_instance=RequestContext(request))
+
+def archive_day(request, year, month, day):
+	"""
+	The weblog archive page for a given day.
+	"""
+	posts = []
+	prev = next = None
+	for year_month_day, lst in groupby(Post.by_month(), lambda x: (x.published.year, x.published.month, x.published.day)):
+		if year_month_day == (int(year), int(month), int(day)):
+			posts = list(lst)
+		elif not posts:
+			prev = year_month_day
+		else:
+			next = year_month_day
+			break
+		
+	context = {
+		'posts':	posts,
+		'day':		date(int(year), int(month), int(day)),
+		'prev':		prev and date(prev[0], prev[1], prev[2]) or None,
+		'next':		next and date(next[0], next[1], next[2]) or None
+	}
+		
+	return render_to_response('blog/archive_day.html', context, context_instance=RequestContext(request))
 
 def detail(request, year, month, day, slug):
 	"""

@@ -1,9 +1,13 @@
-{% extends 'notes/base.html' %}
- 
+{% extends "notes/base.html" %}
+
+{% load couchdb humanize %}
+
+{% block title %}{{ block.super }} - {{ note.body|truncatewords_html:5 }}{% endblock %}
+
 {% block class %} class="entry_detail"{% endblock %}
  
 {% block content %}  
-	<h1><strong>{{ note.created }} <!-- TODO |date:"l, F j, Y" --></strong> at <strong>{{ note.created }} <!-- TODO |date:"g:i a" --></strong></h1>
+	<h1><strong>{{ note.created|convert_datetime|naturalday }}</strong> at <strong>{{ note.created|convert_datetime|date:"g:i a"  }}</strong></h1>
 	<div class="entry">{{ note.body|linebreaks }}</div>
 	{% if form %}<div id="edit"><a href="{{ note.get_edit_url }}">Edit Entry</a></div>{% endif %}
 	{% if object.tags %}<div class="tags list">Tags: <span>{{ note.tags }}</span></div>{% endif %}

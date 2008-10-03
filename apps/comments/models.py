@@ -27,7 +27,26 @@ class Comment(schema.Document):
 	
 	@permalink
 	def get_absolute_url(self):
-		return ('comment_redirect', None, {
+		return ('redirect', None, {
+			'document_id':	self.id,
+		})
+	
+	def store(self):
+		schema.Document.store(self, db)
+
+class Ping(schema.Document):
+	allow_pings = schema.BooleanField(default=True)
+	pings = schema.ListField(schema.DictField(schema.Schema.build(
+		uri = schema.TextField(),
+		title = schema.TextField(),
+		excerpt = schema.TextField(default=False),
+		author = schema.TextField(),
+		time = schema.DateTimeField(),
+	)))
+	
+	@permalink
+	def get_absolute_url(self):
+		return ('redirect', None, {
 			'document_id':	self.id,
 		})
 	

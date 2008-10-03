@@ -1,0 +1,17 @@
+{% extends "tumblelog/base_tumblelog.html" %}
+
+{% load tumblelog %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+	<div id="tumblelog_list">
+		{% for item in items %}
+			<div class="tumblelog_object tumblelog_type_{{ item.value.type|lower }}">
+				{{ item|render_item:item.value.type }}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

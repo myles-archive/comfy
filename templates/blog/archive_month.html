@@ -1,7 +1,7 @@
 {% extends "blog/base_blog.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} archive for {{ month|date:"F Y" }}{% endblock %}
+{% block title %}{{ block.super }} {% trans "archive for" %} {{ month|date:"F Y" }}{% endblock %}
 
 {% block content_title %}
 	<h2>{% trans "Blog" %} {% trans "archive for" %} {{ month|date:"F Y" }}</h2>
@@ -15,13 +15,7 @@
 			</p>
 		{% endif %}
 		{% for post in posts %}
-			<div class="blog_post">
-				<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-				<p class="meta">By {{ post.author.name }} on {{ post.published }}</p>
-				<div class="body">
-					{{ post.body|safe }}
-				</div>
-			</div>
+			{% include "blog/_post.html" %}
 		{% endfor %}
 	</div>
 {% endblock %}
