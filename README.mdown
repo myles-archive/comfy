@@ -79,10 +79,6 @@ A collection of presentations.
 
 Collects short posts/links/images/videos/audio usually from external sources.
 
-### Wiki
-
-A collection of documents.
-
 ### Utils
 
 A collection of utilities to help the other applications.

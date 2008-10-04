@@ -81,7 +81,6 @@ INSTALLED_APPS = (
 	'comfy.apps.blog',
 	'comfy.apps.flatpages',
 	'comfy.apps.tumblelog',
-	'comfy.apps.wiki',
 	'comfy.apps.tags',
 	'comfy.apps.talks',
 	'comfy.apps.utils',
@@ -101,6 +100,12 @@ URL_VALIDATOR_USER_AGENT = DEFAULT_USER_AGENT
 
 LOGIN_REDIRECT_URL = '/'
 
+DATE_FORMAT = 'l, j F, Y'
+TIME_FORMAT = 'g:i a'
+YEAR_MONTH_FORMAT = 'F Y'
+MONTH_DAY_FORMAT = 'j F'
+DATETIME_FORMAT = DATE_FORMAT + TIME_FORMAT
+
 from couchdb import Server, ResourceConflict, ServerError
 from socket import error as SocketError
 try:
@@ -116,9 +121,3 @@ except SocketError:
 	logging.error("Could not connect to the CouchDB server at %s." % COUCHDB_SERVER)
 	SERVER = None
 	COUCHDB = None
-
-DATE_FORMAT = 'l, j F, Y'
-TIME_FORMAT = 'g:i a'
-YEAR_MONTH_FORMAT = 'F Y'
-MONTH_DAY_FORMAT = 'j F'
-DATETIME_FORMAT = DATE_FORMAT + TIME_FORMAT
