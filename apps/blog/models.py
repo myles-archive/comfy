@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from comfy.apps.blog.signals import post_stored
-from comfy.contrib.utils.slugify import slugify
+from comfy.core.utils.slugify import slugify
 
 db = settings.COUCHDB
 

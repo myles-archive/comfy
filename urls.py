@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 	(r'^tumblelog/', include('comfy.apps.tumblelog.urls')),
 	(r'^tags/', include('comfy.apps.tags.urls')),
 	
-	(r'^r/', include('comfy.contrib.redirects.urls')),
+	(r'^r/', include('comfy.core.redirects.urls')),
 	(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/blog/', include('comfy.apps.blog.admin_urls')),
 	(r'^admin/(.*)', admin.site.root),

@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
 
-from comfy.contrib.utils.akismet import Akismet
+from comfy.core.utils.akismet import Akismet
 from comfy.apps.comments.forms import CommentForm
 from comfy.apps.comments.models import Comment
 
