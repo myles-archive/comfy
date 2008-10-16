@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin import widgets
 
-from comfy.apps.tags.fields import TagField
+from comfy.core.tags.fields import TagField
 
 class PostForm(forms.Form):
 	title			= forms.CharField(label=u"Title", required=True, widget=widgets.AdminTextInputWidget)

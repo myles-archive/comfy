@@ -82,7 +82,7 @@ INSTALLED_APPS = (
 	'comfy.apps.blog',
 	'comfy.apps.flatpages',
 	'comfy.apps.tumblelog',
-	'comfy.apps.tags',
+	'comfy.core.tags',
 	'comfy.apps.talks',
 	'comfy.core.utils',
 	'comfy.core.redirects',

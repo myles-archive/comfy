@@ -15,7 +15,7 @@ urlpatterns = patterns('',
 	(r'^comments/', include('comfy.apps.comments.urls')),
 	(r'^notes/', include('comfy.apps.notes.urls')),
 	(r'^tumblelog/', include('comfy.apps.tumblelog.urls')),
-	(r'^tags/', include('comfy.apps.tags.urls')),
+	(r'^tags/', include('comfy.core.tags.urls')),
 	
 	(r'^r/', include('comfy.core.redirects.urls')),
 	(r'^admin/doc/', include('django.contrib.admindocs.urls')),

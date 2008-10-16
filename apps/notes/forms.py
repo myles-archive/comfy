@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin import widgets
 
-from comfy.apps.tags.fields import TagField
+from comfy.core.tags.fields import TagField
 
 class NoteForm(forms.Form):
 	body			= forms.CharField(label=u"Body", widget=widgets.AdminTextareaWidget)
