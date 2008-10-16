@@ -4,6 +4,8 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
+from comfy.apps.comments.signals import comment_stored
+
 db = settings.COUCHDB
 
 class Comment(schema.Document):
@@ -33,6 +35,7 @@ class Comment(schema.Document):
 	
 	def store(self):
 		schema.Document.store(self, db)
+		comment_stored.send(sender=__class__)
 
 class Ping(schema.Document):
 	allow_pings = schema.BooleanField(default=True)
@@ -52,3 +55,4 @@ class Ping(schema.Document):
 	
 	def store(self):
 		schema.Document.store(self, db)
+		ping_stored.send(sender=__class__)

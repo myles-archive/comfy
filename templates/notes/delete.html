@@ -1,19 +1,22 @@
-{% extends 'notes/base.html' %}
+{% extends 'notes/note_base.html' %}
 
-{% load couchdb humanize %}
+{% load couchdb humanize markup %}
 
 {% block title %}{{ block.super }} - Delete {{ note.body|truncatewords_html:5 }}{% endblock %}
 
-{% block class %} class="entry_delete"{% endblock %}
+{% block content_title %}
+	<h2>Deleting Entry from <strong>{{ note.created|convert_datetime|naturalday }}</strong> at <strong>{{ note.created|convert_datetime|date:"g:i a"  }}</strong></h2>
+{% endblock %}
 
 {% block content %}  
-	<h1>Deleting Entry from <strong>{{ note.created|convert_datetime|naturalday }}</strong> at <strong>{{ note.created|convert_datetime|date:"g:i a"  }}</strong></h1>
 	<form action="." method="post">
-		<div class="entry">{{ note.body|linebreaks }}</div>
-		{% if object.tags %}<div class="tags list">Tags: <span>{{ note.tags }}</span></div>{% endif %}
-		<div class="button">
-			<a href="{% url notes_index %}">Cancel</a>
-			<input type="submit" value="Delete Entry">
-		</div><!-- .button -->
+		<fieldset>
+			<div class="entry">{{ note.body|markdown }}</div>
+			{% if object.tags %}<div class="tags list">Tags: <span>{{ note.tags }}</span></div>{% endif %}
+			<p class="button">
+				<a href="{% url notes_index %}">Cancel</a>
+				<input type="submit" value="Delete Entry">
+			</p><!-- .button -->
+		</fieldset>
 	</form>
 {% endblock %}

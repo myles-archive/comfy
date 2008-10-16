@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-from comfy.apps.redirects.models import Document
+from comfy.contrib.redirects.models import Document
 
 db = settings.COUCHDB
 
@@ -24,6 +24,10 @@ def redirect(request, document_id):
 		from comfy.apps.flatpages.models import FlatPage
 		f = FlatPage.load(db, doc.id)
 		return HttpResponseRedirect(f.get_absolute_url())
-	
+	# Is it a Note?
+	elif doc.type == 'Note':
+		from comfy.apps.notes.models import Note
+		note = Note.load(db, doc.id)
+		return HttpResponseRedirect(note.get_absolute_url())
 	else:
 		raise Http404

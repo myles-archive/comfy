@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}: Tags{% endblock %}
+
+{% block body_sidebar %}
+	<div class="span-24" id="body">
+		<h2>Tags</h2>
+		<p>
+			{% for tag in tags %}
+				<a href="{% url tag_detail tag.key %}" style="font-size: 1.{{ tag.value }}em;">{{ tag.key|title }}</a>
+			{% endfor %}
+		</p>
+	</div>
+{% endblock %}

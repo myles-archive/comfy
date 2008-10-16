@@ -4,7 +4,7 @@
 {% block title %}{{ block.super }} {% trans "archive for" %} {{ day|naturalday|title }}{% endblock %}
 
 {% block content_title %}
-	<h2>{% trans "Blog" %} {% trans "archive for" %} {{ day|naturalday|title }}</h2>
+	<h2><span class="alt">{% trans "Blog" %} {% trans "archive for" %}</span> {{ day|naturalday|title }}</h2>
 {% endblock %}
 
 {% block content %}

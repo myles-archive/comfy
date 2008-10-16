@@ -8,14 +8,16 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'^$',
-		view	= 'comfy.apps.tumblelog.views.index',
+		view	= 'comfy.apps.tumblelog.views.homepage',
 		name	= 'homepage',
 	),
 	(r'^blog/', include('comfy.apps.blog.urls')),
 	(r'^comments/', include('comfy.apps.comments.urls')),
 	(r'^notes/', include('comfy.apps.notes.urls')),
+	(r'^tumblelog/', include('comfy.apps.tumblelog.urls')),
+	(r'^tags/', include('comfy.apps.tags.urls')),
 	
-	(r'^r/', include('comfy.apps.redirects.urls')),
+	(r'^r/', include('comfy.contrib.redirects.urls')),
 	(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'^admin/blog/', include('comfy.apps.blog.admin_urls')),
 	(r'^admin/(.*)', admin.site.root),
@@ -23,5 +25,6 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
 	urlpatterns += patterns('',
+		(r'^favicon.ico$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT }),
 		(r'^%s/(.*)$' % escape(settings.MEDIA_URL.strip('/')), 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT }),
 	)

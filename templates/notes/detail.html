@@ -1,14 +1,21 @@
-{% extends "notes/base.html" %}
+{% extends "notes/note_base.html" %}
 
-{% load couchdb humanize %}
+{% load couchdb humanize markup %}
 
 {% block title %}{{ block.super }} - {{ note.body|truncatewords_html:5 }}{% endblock %}
 
-{% block class %} class="entry_detail"{% endblock %}
- 
-{% block content %}  
-	<h1><strong>{{ note.created|convert_datetime|naturalday }}</strong> at <strong>{{ note.created|convert_datetime|date:"g:i a"  }}</strong></h1>
-	<div class="entry">{{ note.body|linebreaks }}</div>
-	{% if form %}<div id="edit"><a href="{{ note.get_edit_url }}">Edit Entry</a></div>{% endif %}
-	{% if object.tags %}<div class="tags list">Tags: <span>{{ note.tags }}</span></div>{% endif %}
+{% block content_title %}
+	<h2>{{ note.created|convert_datetime|naturalday }} <span class="alt">at</span> {{ note.created|convert_datetime|date:"g:i a"  }}</h2>
+	<p class="meta alt">
+		{% if note.tags %}<span>Tags: {% for tag in note.tags %}<span><a href="{% url tag_detail tag %}">{{ tag }}</a></span>{% if not forloop.last %}, {% endif %}{% endfor %}</span>{% endif %}
+		{% if note.tags and form %}<br>{% endif %}
+		{% if form %}<span class="alt"><a href="{{ note.get_edit_url }}">Edit Note</a></span>{% endif %}
+		{% if form %}<span class="alt"><a href="{{ note.get_delete_url }}">Delete Note</a></span>{% endif %}
+	</p>
+{% endblock %}
+
+{% block content %}
+	<div>
+		{{ note.body|markdown }}
+	</div>
 {% endblock %}

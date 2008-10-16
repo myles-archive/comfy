@@ -1,10 +1,10 @@
 {% extends "blog/base_blog.html" %}
-{% load i18n %}
+{% load i18n couchdb %}
 
 {% block title %}{{ block.super }} {% trans "archive for" %} {{ year|date:"Y" }}{% endblock %}
 
 {% block content_title %}
-	<h2>{% trans "Blog" %} {% trans "archive for" %} {{ year|date:"Y" }}</h2>
+	<h2><span class="alt">{% trans "Blog" %} {% trans "archive for" %}</span> {{ year|date:"Y" }}</h2>
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,18 @@
 			</p>
 		{% endif %}
 		{% for post in posts %}
+			{% ifchanged %}<h3>{{ post.published|convert_date|date:"F"|title }}</h3>{% endifchanged %}
 			{% include "blog/_post.html" %}
 		{% endfor %}
 	</div>
+{% endblock %}
+
+{% block sidebar %}
+	{{ block.super }}
+	<h3>Monthly Archive</h3>
+	<ul>
+		{% for month in months %}
+			<li><a href="{% url post_archive_month month|convert_date|date:"Y" month|convert_date|date:"m" %}">{{ month|convert_date|date:"F Y" }}</li>
+		{% endfor %}
+	</ul>
 {% endblock %}

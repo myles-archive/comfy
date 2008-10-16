@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from comfy.apps.blog.signals import post_stored
-from comfy.apps.utils.slugify import slugify
+from comfy.contrib.utils.slugify import slugify
 
 db = settings.COUCHDB
 
@@ -37,6 +37,12 @@ class Post(schema.Document):
 	# 	logo = schema.TextField(default=None),
 	# 	description = schema.TextField(default=None)
 	# ))
+	
+	# Meta
+	meta = schema.ListField(schema.DictField(schema.Schema.build(
+		name = schema.TextField(),
+		content = schema.TextField(),
+	)))
 	
 	# Comments
 	allow_comments = schema.BooleanField(default=True)
@@ -82,7 +88,12 @@ class Post(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
-		post_stored.send()
+		post_stored.send(sender=__class__)
+	
+	@classmethod
+	def all_years(self):
+		return [datetime(row.key[0], 1, 1) for row in
+			db.view('_view/blog/years', group=True)]
 	
 	@classmethod
 	def all_months(cls):
@@ -90,8 +101,21 @@ class Post(schema.Document):
 			db.view('_view/blog/months', group=True)]
 	
 	@classmethod
+	def all_days(self):
+		return [datetime(row.key[0], row.key[1], 1) for row in
+			db.view('_view/blog/days', group=True)]
+	
+	@classmethod
+	def by_year(cls, **options):
+		return cls.view(db, '_view/blog/by_year', **options)
+	
+	@classmethod
 	def by_month(cls, **options):
 		return cls.view(db, '_view/blog/by_month', **options)
+	
+	@classmethod
+	def by_day(cls, **options):
+		return cls.view(db, '_view/blog/by_day', **options)
 	
 	@classmethod
 	def by_slug(cls, **options):

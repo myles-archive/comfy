@@ -1,4 +1,4 @@
-{% load couchdb humanize %}
+{% load couchdb humanize markup %}
 
 <h3 class="title">Note - <a href="{{ item.get_absolute_url }}">{{ item.created|convert_datetime|naturalday }} at {{ item.created|convert_datetime|date:"g:i a"  }}</a></h3>
-<div class="body">{{ item.body|truncatewords_html:"140"|linebreaks }}</div>
+<div class="body">{{ item.body|markdown|truncatewords_html:"140" }}</div>

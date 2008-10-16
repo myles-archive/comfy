@@ -17,6 +17,10 @@ urlpatterns = patterns('comfy.apps.blog.views',
 		view	= 'archive_year',
 		name	= 'post_archive_year'
 	),
+	url(r'^page/(?P<page>\d)/$',
+		view	= 'index',
+		name	= 'post_archive_pagination',
+	),
 	url(r'^$',
 		view	= 'index',
 		name	= 'blog_index'

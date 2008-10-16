@@ -4,8 +4,9 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
-from comfy.apps.utils.slugify import slugify
-from comfy.apps.utils.schema import URLField, SlugField
+from comfy.contrib.utils.slugify import slugify
+from comfy.contrib.utils.schema import URLField, SlugField
+from comfy.apps.bookmarks.signals import bookmark_stored
 
 db = settings.COUCHDB
 
@@ -70,3 +71,4 @@ class Bookmark(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
+		bookmark_stored.send(sender=__class__)

@@ -1,7 +1,9 @@
 {% extends "blog/base_blog.html" %}
-{% load i18n couchdb humanize %}
+{% load i18n couchdb humanize markup %}
 
 {% block title %}{{ block.super }}: {{ post.title }}{% endblock %}
+
+{% block head %}{% for meta in post.meta %}<meta name="{{ meta.name }}" content="{{ meta.content }}">{% endfor %}{% endblock %}
 
 {% block content_title %}
 	<h2>{{ post.title }}</h2>
@@ -11,7 +13,7 @@
 {% block content %}
 	<div class="blog_post">
 		<div class="body">
-			{{ post.body|linebreaks }}
+			{{ post.body|markdown }}
 		</div>
 		
 		<p class="tags alt">{% for tag in post.tags %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
@@ -40,24 +42,14 @@
 					{{ comment.comment|urlizetrunc:"60" }}
 					<p class="date alt">{% trans "Posted on " %}{{ comment.time|convert_datetime|naturalday|title }}</p>
 				</div>
+				<hr>
 			{% endfor %}
 		{% endif %}
 		
 		{% if post.allow_comments %}
-			<form action="{% url post_comment %}" method="post" accept-charset="utf-8" class="vform">
+			<form action="{% url post_comment %}" method="post" accept-charset="utf-8">
 				<fieldset>
 					<legend>{% trans "Post a comment" %}</legend>
-					{{ comment_form.document_id }}
-					{{ comment_form.next }}
-					<label for="id_author_name">{{ comment_form.author_name.label }}</label>
-					{{ comment_form.author_name }}
-					<label for="id_author_email">{{ comment_form.author_email.label }}</label>
-					{#
-						TODO Need to work on the form here. http://www.cssdemos.com/2007/12/29/hands-on-with-blueprint-a-css-framework/
-					#}
-					{{ comment_form.author_email }}
-					{{ comment_form.author_url }}
-					{{ comment_form.comment }}
 					{{ comment_form.as_p }}
 					<p><input type="submit" value="{% trans "Post Comment" %}"></p>
 				</fieldset>

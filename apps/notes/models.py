@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
@@ -10,6 +10,7 @@ class Note(schema.Document):
 	body = schema.TextField()
 	created = schema.DateTimeField()
 	updated = schema.DateTimeField()
+	published = schema.DateField()
 	tags = schema.ListField(schema.TextField())
 	private = schema.BooleanField(default=False)
 	
@@ -53,6 +54,8 @@ class Note(schema.Document):
 	def store(self, update_timestamp=True):
 		if not self.created:
 			self.created = datetime.now()
+		if not self.published:
+			self.published = date.now()
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)

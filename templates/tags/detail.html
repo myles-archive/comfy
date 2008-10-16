@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}: Tag {{ tag|title }}{% endblock %}
+
+{% block content_title %}
+	<h2><span class="alt">Tag</span> {{ tag|title }}</h2>
+{% endblock %}
+
+{% block content %}
+	{% for doc in docs %}
+		<h3><a href="{% url redirect doc.id %}">{% if doc.title %}{{ doc.title }}{% else %}{{ doc.id }}{% endif %}</a></h3>
+		<p class="tag_list">
+			{% for otag in doc.tags %}
+				<span><a href="{% url tag_detail otag %}">{{ otag|title }}</a></span>{% if not forloop.last %},{% endif %}
+			{% endfor %}
+		</p>
+	{% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+	<h3><a href="{% url tags_index %}">Tags</a></h3>
+	<form accept-charset="utf-8">
+		<p>
+			<select name="tag" onchange="document.location='../' + this.value + '/'" autocomplete="off">
+				{% for otag in tags %}
+					<option {% ifequal tag otag.key %}selected="selected"{% endifequal %} value="{{ otag.key }}">{{ otag.key|title }}</option>
+				{% endfor %}
+			</select>
+		</p>
+		<noscript><p><input type="submit" value="Continue &rarr;"></p></noscript>
+	</form>
+{% endblock %}

@@ -1,70 +1,24 @@
-{% extends 'notes/base.html' %}
-{% load humanize couchdb %}
- 
-{% block class %}{% if has_previous %} class="paginated"{% endif %}{% endblock %}
- 
-{% block search %}
-	<div id="search">
-		<form action="{# url notes_search #}" method="get" accept-charset="utf-8">
-			<div><label for="s">Search</label><input type="text" value="" name="s" id="s" /></div>
+{% extends 'notes/note_base.html' %}
+{% load humanize couchdb markup %}
+
+{% block content %}
+	{% if form %}
+		<form action="." method="post">
+			<fieldset>
+				<legend><a href="{% url note_create %}">New Note</a></legend>
+				<p>{{ form.body }} {{ form.body.errors }}</p>
+				<p class="tags"><label for="id_tags">{{ form.tags.label }}</label> {{ form.tags }} {{ form.tags.errors }}</p>
+				<input type="submit" value="Log It">
+			</fieldset>
 		</form>
-	</div><!-- #search -->
-{% endblock %}
- 
-{% block header %}
-	{% if has_previous %}
-		<div id="add">
-			<a href="{% url notes_index %}">New Entry</a>
-		</div><!-- #add -->
 	{% endif %}
-{% endblock %}
- 
-{% block content %}  
-	{% if not has_previous %}
-		{% if form %}
-			<form action="." method="post">
-				<div>
-					{{ form.body.errors }}
-					{{ form.body }}
-				</div>
-				<div class="tags">
-					{{ form.tags.errors }}
-					{{ form.tags }}
-				</div>
-				<div class="button"><input type="submit" value="Log It"></div>
-			</form>
-		{% endif %}
-	{% endif %}
-	 
-	<div id="entries">
-		{% for entry in notes %}
-			{% ifchanged %}<h2>{{ entry.created|convert_datetime|naturalday|title }}</h2>{% endifchanged %}
-			<div class="entry">
-				<div class="meta">
-					{% if form %}<span class="delete"><a href="{{ entry.get_delete_url }}">&otimes;</a></span>{% endif %}
-					<span class="date">
-					  <a href="{{ entry.get_absolute_url }}">{{ entry.created|convert_datetime|date:"g:i a" }}</a>
-					</span>
-				</div>
-				<div class="content">
-					{{ entry.body|linebreaks }}
-				</div><!-- .content -->
-			</div>
-		{% endfor %}
-	</div><!-- #entries -->
-	{% endblock %}
-	 
-	{% block navigation %}
-	<div id="nav">
-	{% if is_paginated %}
-		{% if has_next %}
-		<a class="older" href="/chiplog/page/{{ next }}/">Older</a>
-		{% endif %}
-		{% if has_previous %}
-		<a class="newer" href="/chiplog/page/{{ previous }}/">Newer</a>
-		{% endif %}
-	{% else %}
-	<div class="empty_nav"></div>
-	{% endif %}
-	</div><!-- #nav -->
+	
+	{% for note in notes %}
+		{% ifchanged %}<h2><span class="alt">Notes for</span> {{ note.created|convert_datetime|naturalday|title }}</h2>{% endifchanged %}
+		
+		<div class="note-{{ note.id }}">
+			<h3>{% if form %}<span class="delete"><a href="{{ note.get_delete_url }}">&otimes;</a></span>{% endif %} <span class="date"><a href="{{ note.get_absolute_url }}">{{ note.created|convert_datetime|date:"g:i a" }}</a></span></h3>
+			{{ note.body|markdown }}
+		</div><!-- .note-{{ note.id }} -->
+	{% endfor %}
 {% endblock %}

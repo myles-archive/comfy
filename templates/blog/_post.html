@@ -1,9 +1,8 @@
-{% load couchdb humanize %}
+{% load couchdb humanize markup %}
 
-<div class="blog_post">
+<div class="blog_post{% if forloop.first %} first{% endif %}{% if forloop.last %} last{% endif %}" id="post_{{ post.id }}">
 	<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
 	<p class="meta alt">By {{ post.author.name|default_if_none:"Anonymous" }} on {{ post.published|convert_date|naturalday|title }}</p>
-	<div class="body">
-		{{ post.body|linebreaks }}
-	</div>
+	<div class="body">{{ post.body|markdown }}</div>
 </div>
+{% if not forloop.last %}<hr>{% endif %}

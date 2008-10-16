@@ -8,19 +8,35 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from comfy.apps.blog.models import Post
 from comfy.apps.comments.forms import CommentForm
 
 # db = settings.COUCHDB
 
-def index(request):
+def index(request, page=1):
 	"""
 	The weblog index page.
 	"""
-	posts = list(Post.by_time(descending=True, count=10))
+	post_list = list(Post.by_time(descending=True))
+	paginator = Paginator(post_list, 10)
 	
-	context = { 'posts': posts }
+	try:
+		posts = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		posts = paginator.page(paginator.num_pages)
+	
+	context = {
+		'posts':				posts.object_list,
+		'has_next':				posts.has_next(),
+		'has_previous':			posts.has_previous(),
+		'has_other_pages':		posts.has_other_pages(),
+		'start_index':			posts.start_index(),
+		'end_index':			posts.end_index(),
+		'previous_page_number':	posts.previous_page_number(),
+		'next_page_number':		posts.next_page_number(),
+	}
 	
 	return render_to_response('blog/index.html', context, context_instance=RequestContext(request))
 
@@ -30,7 +46,7 @@ def archive_year(request, year):
 	"""
 	posts = []
 	prev = next = None
-	for year_time, lst in groupby(Post.by_month(), lambda x: x.published.year):
+	for year_time, lst in groupby(Post.by_year(descending=True), lambda x: x.published.year):
 		if year_time == int(year):
 			posts = list(lst)
 		elif not posts:
@@ -39,11 +55,14 @@ def archive_year(request, year):
 			next = year_time
 			break
 	
+	months = Post.all_months()
+	
 	context = {
 		'posts':	posts,
 		'year':		date(int(year), 1, 1),
 		'prev':		prev and date(prev, 1, 1) or None,
-		'next':		next and date(next, 1, 1) or None
+		'next':		next and date(next, 1, 1) or None,
+		'months':	months,
 	}
 	
 	return render_to_response('blog/archive_year.html', context, context_instance=RequestContext(request))
@@ -54,7 +73,7 @@ def archive_month(request, year, month):
 	"""
 	posts = []
 	prev = next = None
-	for year_month, lst in groupby(Post.by_month(), lambda x: (x.published.year, x.published.month)):
+	for year_month, lst in groupby(Post.by_month(descending=True), lambda x: (x.published.year, x.published.month)):
 		if year_month == (int(year), int(month)):
 			posts = list(lst)
 		elif not posts:
@@ -78,7 +97,7 @@ def archive_day(request, year, month, day):
 	"""
 	posts = []
 	prev = next = None
-	for year_month_day, lst in groupby(Post.by_month(), lambda x: (x.published.year, x.published.month, x.published.day)):
+	for year_month_day, lst in groupby(Post.by_day(descending=True), lambda x: (x.published.year, x.published.month, x.published.day)):
 		if year_month_day == (int(year), int(month), int(day)):
 			posts = list(lst)
 		elif not posts:

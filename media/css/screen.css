@@ -2,7 +2,6 @@
 @import url("./blueprint/print.css") print;
 @import url("./blueprint/plugins/fancy-type/screen.css") screen, projection;
 @import url("./blueprint/plugins/tabs/tabs.css") screen, projection, print;
-@import url("./blueprint/plugins/forms/forms.css") screen, projection, print;
 
 /* -------------------------------------------------------------- 
    SCREEN
@@ -19,3 +18,6 @@
 #footer .tabs li { margin-right: 20px; }
 #footer .tabs a { color: #999; text-decoration: none; }
 #footer p.quiet { color: #ccc; }
+
+/* FORMS */
+label { width: 100px; float: left; clear: both; }

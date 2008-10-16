@@ -13,4 +13,14 @@
 			{% include "blog/_post.html" %}
 		{% endfor %}
 	</div>
+	
+	{% if has_other_pages %}
+		<div id="pagination">
+			<p>
+				{% if has_previous %}<a href="{% url post_archive_pagination previous_page_number %}" title="Page {{ previous_page_number }}">Previous</a>{% endif %}
+				{% if has_previous and has_next %}-{% endif %}
+				{% if has_next %}<a href="{% url post_archive_pagination next_page_number %}" title="Page {{ next_page_number }}">Next</a>{% endif %}
+			</p>
+		</div>
+	{% endif %}
 {% endblock %}
