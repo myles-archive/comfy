@@ -1,0 +1,30 @@
+{% extends "bookmarks/base_bookmarks.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block content_title %}
+	<h2>{% trans "Bookmarks" %}</h2>
+{% endblock %}
+
+{% block content %}
+	<div id="bookmarks_links">
+		{% for link in bookmarks %}
+			<div id="bookmark-{{ link.id }}">
+				<h3><a href="{{ link.url }}">{{ link.title }}</a> <a href="{{ link.get_absolute_url }}">#</a></h3>
+				<span class="tags">{% for tag in link.tags %}{{ tag }}{% endfor %}</span>
+				{% if link.body %}{{ link.body }}{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+	
+	{% if has_other_pages %}
+		<div id="pagination">
+			<p>
+				{% if has_previous %}<a href="{% url bookmarks_archive_pagination previous_page_number %}" title="Page {{ previous_page_number }}">Previous</a>{% endif %}
+				{% if has_previous and has_next %}-{% endif %}
+				{% if has_next %}<a href="{% url bookmarks_archive_pagination next_page_number %}" title="Page {{ next_page_number }}">Next</a>{% endif %}
+			</p>
+		</div>
+	{% endif %}
+{% endblock %}

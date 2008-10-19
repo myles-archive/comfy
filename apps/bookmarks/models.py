@@ -71,4 +71,8 @@ class Bookmark(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
-		bookmark_stored.send(sender=__class__)
+		bookmark_stored.send(sender=self)
+	
+	@classmethod
+	def by_time(cls, **options):
+		return cls.view(db, '_view/bookmarks/by_time', **options)
