@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from comfy.apps.blog.models import Post
-from comfy.core.comments.forms import CommentForm
+from comfy.contrib.comments.forms import CommentForm
 
 # db = settings.COUCHDB
 

@@ -85,17 +85,17 @@ INSTALLED_APPS = (
 	'comfy.apps.talks',
 	'comfy.apps.notes',
 	'comfy.apps.bookmarks',
-	'comfy.core.search',
-	'comfy.core.comments',
-	'comfy.core.utils',
-	'comfy.core.redirects',
-	'comfy.core.tags',
+	'comfy.contrib.search',
+	'comfy.contrib.comments',
+	'comfy.contrib.utils',
+	'comfy.contrib.redirects',
+	'comfy.contrib.tags',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.auth',
 	'django.core.context_processors.media',
-	'comfy.core.utils.context_processors.standard',
+	'comfy.contrib.utils.context_processors.standard',
 )
 
 DEFAULT_USER_AGENT = "Comfy/0.1 (http://mylesbraithwaite.com/)"

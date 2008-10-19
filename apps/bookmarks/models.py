@@ -4,8 +4,8 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
-from comfy.core.utils.slugify import slugify
-from comfy.core.utils.schema import URLField, SlugField
+from comfy.contrib.utils.slugify import slugify
+from comfy.contrib.utils.schema import URLField, SlugField
 from comfy.apps.bookmarks.signals import bookmark_stored
 
 db = settings.COUCHDB

@@ -8,13 +8,13 @@ urlpatterns = patterns('',
 		name	= 'homepage',
 	),
 	(r'^blog/', include('comfy.apps.blog.urls')),
-	(r'^comments/', include('comfy.core.comments.urls')),
+	(r'^comments/', include('comfy.contrib.comments.urls')),
 	(r'^notes/', include('comfy.apps.notes.urls')),
 	(r'^tumblelog/', include('comfy.apps.tumblelog.urls')),
-	(r'^tags/', include('comfy.core.tags.urls')),
+	(r'^tags/', include('comfy.contrib.tags.urls')),
 	
-	(r'^r/', include('comfy.core.redirects.urls')),
-	(r'^admin/', include('comfy.core.admin.urls')),
+	(r'^r/', include('comfy.contrib.redirects.urls')),
+	(r'^admin/', include('comfy.contrib.admin.urls')),
 )
 
 if settings.DEBUG:

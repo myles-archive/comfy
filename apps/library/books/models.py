@@ -2,7 +2,7 @@ from couchdb import schema
 
 from django.comf import settings
 
-from comfy.core.utils.slugify import slugify
+from comfy.contrib.utils.slugify import slugify
 
 db = settings.COUCHDB
 
