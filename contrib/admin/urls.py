@@ -8,14 +8,14 @@ urlpatterns = patterns('',
 	(r'^django/(.*)', django_admin.site.root),
 )
 
-urlpatterns += patterns('comfy.core.admin.views',
+urlpatterns += patterns('comfy.contrib.admin.views',
 	url(r'^$',
 		view	= 'index',
 		name	= 'admin_index'
 	),
 )
 
-urlpatterns += patterns('comfy.core.admin.views.blog',
+urlpatterns += patterns('comfy.contrib.admin.views.blog',
 	url(r'^blog/$',
 		view	= 'index',
 		name	= 'comfy_admin_blog'

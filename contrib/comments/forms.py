@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 
-from comfy.core.comments.models import Comment
+from comfy.contrib.comments.models import Comment
 
 db = settings.COUCHDB
 
