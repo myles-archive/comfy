@@ -10,8 +10,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
 
 from comfy.core.utils.akismet import Akismet
-from comfy.apps.comments.forms import CommentForm
-from comfy.apps.comments.models import Comment
+from comfy.core.comments.forms import CommentForm
+from comfy.core.comments.models import Comment
 
 db = settings.COUCHDB
 

@@ -9,5 +9,5 @@ class PostForm(forms.Form):
 	body			= forms.CharField(label=u"Body", widget=widgets.AdminTextareaWidget)
 	tags			= TagField(label=u"Tags", required=False, help_text=u"Seperate tags with a comma (,).", widget=widgets.AdminTextInputWidget)
 	published		= forms.DateField(label=u"Published", widget=widgets.AdminDateWidget)
-	allow_comments	= forms.BooleanField(label=u"Allow Comments", initial=True, widget=widgets.AdminTextInputWidget)
-	allow_pings		= forms.BooleanField(label=u"Allow Pings", initial=True, widget=widgets.AdminTextInputWidget)
+	allow_comments	= forms.BooleanField(label=u"Allow Comments", initial=True)
+	allow_pings		= forms.BooleanField(label=u"Allow Pings", initial=True)

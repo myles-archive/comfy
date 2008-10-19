@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from comfy.apps.tags.models import Tag
+from comfy.core.tags.models import Tag
 
 def index(request):
 	tags = Tag.all_tags()

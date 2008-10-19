@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('comfy.apps.tags.views',
+urlpatterns = patterns('comfy.core.tags.views',
 	url(r'^(?P<tag>[-\w]+)/$',
 		view	= 'detail',
 		name	= 'tag_detail',

@@ -14,6 +14,11 @@ from comfy.apps.blog.forms import PostForm
 db = settings.COUCHDB
 
 @staff_member_required
+def index(request):
+	context = {}
+	return render_to_response('comfy_admin/blog/index.html', context, context_instance=RequestContext(request))
+
+@staff_member_required
 def post_add_edit(request, id=None):
 	if id:
 		post = Post.load(db, id)
@@ -59,7 +64,7 @@ def post_add_edit(request, id=None):
 				post.allow_pings = form.cleaned_data['allow_pings']
 				post.store()
 	
-	return render_to_response('blog/post_add.html', {
+	return render_to_response('comfy_admin/blog/posts/post_add_edit.html', {
 		'title':		u'%s %s' % (add and _('Add') or _('Edit'), _('page')),
 		'post':			post,
 		'form':			form,

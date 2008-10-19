@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>{% block title %}{{ site_name }} Administration{% endblock %}</title>
+	<link rel="stylesheet" href="{{ MEDIA_URL }}css/admin.css" type="text/css" media="all">
+	<!--[if IE]><link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	{% block head %}{% endblock %}
+</head>
+<body id="section_{{ section }}">
+	<div class="container">
+		<div class="span-24 first last" id="header">
+			<h1 id="site_name">{{ site_name }} Administration</h1>
+			<ul class="tabs" id="navigation">
+				{% include "comfy_admin/_tabs.html" %}
+				<li><a href="/admin/django/">Django Administration</a></li>
+			</ul>
+			<hr>
+		</div><!-- .span-24 .first .last #header -->
+		
+		<hr class="space">
+		
+		{% block body_sidebar %}
+			<div class="span-15 prepend-1 colborder first" id="body">
+				{% block body %}
+					{% block content_title %}{% endblock %}
+					{% block content %}{% endblock %}
+				{% endblock %}
+			</div><!-- .span-15 .prepend-1 .colborder .first #body -->
+
+			<div class="span-7 last" id="sidebar">
+				{% block sidebar %}{% endblock %}
+			</div><!-- .span7 .last #sidebar -->
+		{% endblock %}
+		
+		<hr>
+		
+		<div class="span-24 first last" id="footer">
+			<ul class="tabs">{% include "comfy_admin/_tabs.html" %}</ul>
+		</div><!-- .span-24 .first .last #footer -->
+	</div><!-- .container -->
+</body>
+</html>

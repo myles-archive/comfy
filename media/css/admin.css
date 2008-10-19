@@ -1,0 +1,23 @@
+@import url("./blueprint/screen.css") screen, projection;
+@import url("./blueprint/print.css") print;
+@import url("./blueprint/plugins/fancy-type/screen.css") screen, projection;
+@import url("./blueprint/plugins/tabs/tabs.css") screen, projection, print;
+
+/* -------------------------------------------------------------- 
+   SCREEN
+-------------------------------------------------------------- */
+
+/* NAVIGATION */
+#navigation.tabs { padding: 0; float: right; }
+#navigation.tabs a { padding: 5px 10px; text-decoration: none; }
+#navigation.tabs a:hover { }
+
+/* FOOTER */
+#footer { padding: 0; }
+#footer .tabs { font-size: 13px; }
+#footer .tabs li { margin-right: 20px; }
+#footer .tabs a { color: #999; text-decoration: none; }
+#footer p.quiet { color: #ccc; }
+
+/* FORMS */
+label { width: 100px; float: left; clear: both; }

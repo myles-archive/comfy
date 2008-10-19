@@ -4,7 +4,7 @@ from couchdb import schema
 from django.db.models import permalink
 from django.conf import settings
 
-from comfy.apps.comments.signals import comment_stored
+from comfy.core.comments.signals import comment_stored
 
 db = settings.COUCHDB
 

@@ -1,0 +1,19 @@
+{% extends "comfy_admin/base.html" %}
+
+{% block head %}
+	{{ form.media }}
+{% endblock %}
+
+{% block content_title %}
+	<h2><span class="alt">{% if add %}Add{% else %}Edit {{ post.title|truncatewords:"18"|escape }}{% endif %}</span> Post</h2>
+{% endblock %}
+
+{% block content %}
+	<form action="." method="post" accept-charset="utf-8">
+		<fieldset id="post">
+			<legend>Post</legend>
+			{{ form.as_p }}
+		</fieldset>		
+		<p><input type="submit" value="{% if add %}Add this post{% else %}Save all changes{% endif %}" class="default"></p>
+	</form>
+{% endblock %}

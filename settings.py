@@ -82,14 +82,14 @@ INSTALLED_APPS = (
 	'comfy.apps.blog',
 	'comfy.apps.flatpages',
 	'comfy.apps.tumblelog',
-	'comfy.core.tags',
 	'comfy.apps.talks',
-	'comfy.core.utils',
-	'comfy.core.redirects',
 	'comfy.apps.notes',
 	'comfy.apps.bookmarks',
-	'comfy.apps.search',
-	'comfy.apps.comments',
+	'comfy.core.search',
+	'comfy.core.comments',
+	'comfy.core.utils',
+	'comfy.core.redirects',
+	'comfy.core.tags',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

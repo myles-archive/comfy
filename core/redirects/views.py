@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.conf import settings
 
-from comfy.contrib.redirects.models import Document
+from comfy.core.redirects.models import Document
 
 db = settings.COUCHDB
 
