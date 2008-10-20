@@ -19,7 +19,10 @@ urlpatterns = patterns('',
 )
 
 if settings.DEBUG:
+	from django.views.generic.simple import direct_to_template
 	urlpatterns += patterns('',
 		(r'^favicon.ico$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT }),
 		(r'^%s/(.*)$' % escape(settings.MEDIA_URL.strip('/')), 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT }),
+		(r'^404/$', direct_to_template, {'template': '404.html'}),
+		(r'^500/$', direct_to_template, {'template': '500.html'}),
 	)

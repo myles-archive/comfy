@@ -12,9 +12,7 @@
 <body id="section_{{ section }}">
 	<div class="container">
 		<div class="span-24 first last" id="header">
-			<h1 id="site_name">{{ site_name }}</h1>
-			<hr>
-			<!--<h2 class="alt"></h2>-->
+			<h1 id="site_name"><a href="{% url homepage %}">{{ site_name }}</a></h1>
 			<ul class="tabs" id="navigation">{% include "_tabs.html" %}</ul>
 			<hr>
 		</div><!-- .span-24 .first .last #header -->
@@ -30,6 +28,19 @@
 			</div><!-- .span-15 .prepend-1 .colborder .first #body -->
 
 			<div class="span-7 last" id="sidebar">
+				<div class="intro">
+					<p>Myles Braithwaite is a twenty two year old computer programmer living in Toronto, Canada <span class="alt amp">&amp;</span> works for <a href="http://monkeyinyoursoul.com/">Monkey in your Soul</a>. He has been told he is a new-age renaissance man. Like most web developers who have a personal page he likes talking about himself in the third person.</p>
+					
+					<h4>Social Networks</h4>
+					<ul class="social_networks">
+						<li class="flickr"><a href="http://flickr.com/photos/mylesbraithwaite/" title="Flickr Profile">Flickr</a></li>
+						<li class="delicious"><a href="http://delicious.com/mylesb" title="Delicious Profile">Delicious</a></li>
+						<li class="pownce"><a href="http://pownce.com/myles/" title="Pownce Profile">Pownce</a></li>
+						<li class="lastfm"><a href="http://www.last.fm/user/mylesb" title="last.fm Profile">last.fm</a></li>
+						<li class="facebook"><a href="http://www.facebook.com/profile.php?id=501556508" title="Facebook Profile">Facebook</a></li>
+						<li class="linkedin"><a href="http://www.linkedin.com/in/mylesbraithwaite" title="LinkedIn Profile">LinkedIn</a></li>
+					</ul><!-- .social_networks -->
+				</div><!-- .intro -->
 				{% block sidebar %}{% endblock %}
 			</div><!-- .span7 .last #sidebar -->
 		{% endblock %}
