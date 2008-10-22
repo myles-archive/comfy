@@ -35,7 +35,7 @@ class Comment(schema.Document):
 	
 	def store(self):
 		schema.Document.store(self, db)
-		comment_stored.send(sender=__class__)
+		comment_stored.send(sender=self)
 
 class Ping(schema.Document):
 	allow_pings = schema.BooleanField(default=True)
@@ -55,4 +55,4 @@ class Ping(schema.Document):
 	
 	def store(self):
 		schema.Document.store(self, db)
-		ping_stored.send(sender=__class__)
+		ping_stored.send(sender=self)

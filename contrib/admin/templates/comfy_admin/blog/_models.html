@@ -1,8 +1,8 @@
 <table summary="Models available in the Blog application.">
 	<caption><a href="{% url comfy_admin_blog %}">Blog</a></caption>
 	<tr>
-		<th scope="row"><a href="{# TODO url comfy_admin_blog_post #}">Post</a></th>
+		<th scope="row"><a href="{% url comfy_admin_blog_post_list %}">Post</a></th>
 		<td><a href="{% url comfy_admin_blog_post_add %}" class="addlink">Add</a></td>
-		<td><a href="{# TODO url comfy_admin_blog_post #}" class="changelink">Change</a></td>
+		<td><a href="{% url comfy_admin_blog_post_list %}" class="changelink">Change</a></td>
 	</tr>
 </table>

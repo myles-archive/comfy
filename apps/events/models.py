@@ -6,19 +6,19 @@ from django.conf import settings
 
 from comfy.contrib.utils.slugify import slugify
 from comfy.contrib.utils.schema import URLField, SlugField
-from comfy.apps.bookmarks.signals import bookmark_stored
+from comfy.apps.events.signals import event_stored
 
 db = settings.COUCHDB
 
-class Bookmark(schema.Document):
-	type = schema.TextField(default='Bookmark')
+class Event(schema.Document):
+	type = schema.TextField(default='Event')
 	title = schema.TextField()
 	slug = SlugField()
-	url = URLField()
-	via = schema.DictField(schema.Schema.build(
-		title = schema.TextField(),
-		url = URLField(),
+	
+	location = schema.DictField(schema.Schema.build(
+		
 	))
+	
 	author = schema.DictField(schema.Schema.build(
 		name = schema.TextField(),
 		email = schema.TextField(),
@@ -55,13 +55,10 @@ class Bookmark(schema.Document):
 		time = schema.DateTimeField(),
 	)))
 	
-	def get_absolute_url(self):
-		return self.url
-	
 	@permalink
-	def get_internal_url(self):
-		return ('bookmark_detail', None, {
-			'bookmark_id':	self.id,
+	def get_absolute_url(self):
+		return ('event_detail', None, {
+			'event_id':	self.id,
 		})
 	
 	def store(self, update_timestamp=True):
@@ -75,7 +72,3 @@ class Bookmark(schema.Document):
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
 		bookmark_stored.send(sender=self)
-	
-	@classmethod
-	def by_time(cls, **options):
-		return cls.view(db, '_view/bookmarks/by_time', **options)

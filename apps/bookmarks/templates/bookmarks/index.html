@@ -1,5 +1,5 @@
 {% extends "bookmarks/base_bookmarks.html" %}
-{% load i18n %}
+{% load i18n markup %}
 
 {% block title %}{{ block.super }}{% endblock %}
 
@@ -9,11 +9,11 @@
 
 {% block content %}
 	<div id="bookmarks_links">
-		{% for link in bookmarks %}
-			<div id="bookmark-{{ link.id }}">
-				<h3><a href="{{ link.url }}">{{ link.title }}</a> <a href="{{ link.get_absolute_url }}">#</a></h3>
-				<span class="tags">{% for tag in link.tags %}{{ tag }}{% endfor %}</span>
-				{% if link.body %}{{ link.body }}{% endif %}
+		{% for bookmark in bookmarks %}
+			<div id="bookmark-{{ bookmark.id }}">
+				<h3><a href="{{ bookmark.get_absolute_url }}">{{ bookmark.title }}</a> <a href="{{ bookmark.get_internal_url }}">#</a></h3>
+				{% if bookmark.body %}{{ bookmark.body|markdown }}{% endif %}
+				<p class="tags" style="float:right;">{% for tag in bookmark.tags %}<span class="tag">{{ tag }}</span> {% endfor %}</p>
 			</div>
 		{% endfor %}
 	</div>

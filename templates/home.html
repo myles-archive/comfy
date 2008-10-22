@@ -8,6 +8,8 @@
 			<div class="tumblelog_object tumblelog_type_{{ item.value.type|lower }}">
 				{{ item|render_item:item.value.type }}
 			</div>
+			
+			{% if not forloop.last %}<hr>{% endif %}
 		{% endfor %}
 	</div>
 	

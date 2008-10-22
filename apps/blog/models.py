@@ -88,7 +88,15 @@ class Post(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
-		post_stored.send(sender=__class__)
+		post_stored.send(sender=self)
+	
+	@property
+	def comment_count(self):
+		return len(self.comments)
+	
+	@property
+	def ping_count(self):
+		return len(self.pings)
 	
 	@classmethod
 	def all_years(self):

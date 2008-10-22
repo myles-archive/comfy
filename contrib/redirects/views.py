@@ -29,5 +29,9 @@ def redirect(request, document_id):
 		from comfy.apps.notes.models import Note
 		note = Note.load(db, doc.id)
 		return HttpResponseRedirect(note.get_absolute_url())
+	elif doc.type == 'Bookmark':
+		from comfy.apps.bookmarks.models import Bookmark
+		bookmark = Bookmark.load(db, doc.id)
+		return HttpResponseRedirect(bookmark.get_absolute_url())
 	else:
 		raise Http404

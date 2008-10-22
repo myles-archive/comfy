@@ -1,4 +1,5 @@
 from datetime import datetime, date
+from urllib import quote_plus
 
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseRedirect
@@ -11,7 +12,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from comfy.apps.bookmarks.models import Bookmark
 from comfy.contrib.comments.forms import CommentForm
 
-# db = settings.COUCHDB
+db = settings.COUCHDB
 
 def index(request, page=1):
 	bookmark_list = list(Bookmark.by_time(descending=True))
@@ -34,3 +35,24 @@ def index(request, page=1):
 	}
 	
 	return render_to_response('bookmarks/index.html', context, context_instance=RequestContext(request))
+
+def detail(request, bookmark_id):
+	bookmark = Bookmark.load(db, bookmark_id)
+	
+	try:
+		user = User.objects.get(email=bookmark.author.email)
+	except User.DoesNotExist:
+		user = None
+	
+	comment_form = CommentForm(initial={
+		'document_id':	bookmark.id,
+		'next':			quote_plus(bookmark.get_absolute_url())
+	})
+	
+	context = {
+		'bookmark':		bookmark,
+		'user':			user,
+		'comment_form':	comment_form
+	}
+	
+	return render_to_response('bookmarks/detail.html', context, context_instance=RequestContext(request))

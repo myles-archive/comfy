@@ -90,6 +90,7 @@ INSTALLED_APPS = (
 	'comfy.contrib.utils',
 	'comfy.contrib.redirects',
 	'comfy.contrib.tags',
+	'comfy.contrib.admin',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

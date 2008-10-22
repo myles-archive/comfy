@@ -7,6 +7,7 @@
 	<title>{% block title %}{{ site_name }}{% endblock %}</title>
 	<link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css" type="text/css" media="all">
 	<!--[if IE]><link rel="stylesheet" href="{{ MEDIA_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}js/jquery.js"></script>
 	{% block head %}{% endblock %}
 </head>
 <body id="section_{{ section }}">
@@ -46,20 +47,23 @@
 		{% endblock %}
 		
 		<hr>
-		<div class="span-7 colborder">
-			<h6>Here's a box</h6>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-		</div><!-- .span-7 .colborder -->
+		<div class="span-7 colborder botbox" id="syndication">
+			<h6>Syndication</h6>
+			<ul>
+				<li><a href="{# TODO Add a feed here #}" class="feed">Everything</a></li>
+				<li><a href="{# TODO Add a feed here #}" class="feed">Blog</a></li>
+			</ul>
+		</div><!-- .span-7 .colborder .botbox #syndication -->
 		
-		<div class="span-8 colborder">
-			<h6>And another box</h6>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat laboris nisi ut aliquip.</p>
-		</div><!-- .span-8 .colborder -->
+		<div class="span-8 colborder botbox" id="popular_tags">
+			<h6>Popular Tags</h6>
+			<p><a class="tag" style="font-size:1.4em;">Lorem</a> <a class="tag" style="font-size:1.1em;">Ipsum</a> <a class="tag" style="font-size:1.2em;">dolor</a> <a class="tag" style="font-size:1.3em;">sit amet</a> <a class="tag" style="font-size:1.3em;">consectetur</a> <a class="tag" style="font-size:1.3em;">adipisicing</a></p>
+		</div><!-- .span-8 .colborder .botbox -->
 		
-		<div class="span-7 last">
+		<div class="span-7 last botbox">
 			<h6>This box is aligned with the sidebar</h6>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-		</div><!-- .span-7 .last -->
+		</div><!-- .span-7 .last .botbox -->
 		<hr>
 		
 		<div class="span-24 first last" id="footer">

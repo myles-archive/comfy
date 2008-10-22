@@ -5,6 +5,7 @@ from django.conf import settings
 
 from comfy.apps.blog.models import Post
 from comfy.apps.notes.models import Note
+from comfy.apps.bookmarks.models import Bookmark
 
 db = settings.COUCHDB
 register = template.Library()
@@ -15,6 +16,8 @@ def render_item(item, document_type=None, template_directory='items'):
 		content_object = Post.load(db, item.id)
 	elif document_type == 'Note':
 		content_object = Note.load(db, item.id)
+	elif document_type == 'Bookmark':
+		content_object = Bookmark.load(db, item.id)
 	else:
 		content_object = None
 		document_type = 'none'

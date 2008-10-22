@@ -19,6 +19,14 @@ def index(request):
 	return render_to_response('comfy_admin/blog/index.html', context, context_instance=RequestContext(request))
 
 @staff_member_required
+def post_list(request):
+	posts = list(Post.by_time())
+	
+	return render_to_response('comfy_admin/blog/posts/post_list.html', {
+		'posts':	posts,
+	}, context_instance=RequestContext(request))
+
+@staff_member_required
 def post_add_edit(request, id=None):
 	if id:
 		post = Post.load(db, id)

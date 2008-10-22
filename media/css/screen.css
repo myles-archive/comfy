@@ -7,10 +7,19 @@
    SCREEN
 -------------------------------------------------------------- */
 
+h1 a, h2 a, h3 a { text-decoration: none; }
+
 /* NAVIGATION */
 #navigation.tabs { padding: 0; }
 #navigation.tabs a { padding: 5px 10px; text-decoration: none; }
 #navigation.tabs a:hover { }
+
+/* SIDEBAR */
+#sidebar h4 { margin-bottom: 0; }
+#sidebar ul { list-style: none; margin-left: 0; }
+
+/* BOTTOM BOX */
+.botbox ul { list-style: none; margin-left: 0; }
 
 /* FOOTER */
 #footer { padding: 0; }

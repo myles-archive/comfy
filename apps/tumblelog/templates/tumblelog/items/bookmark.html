@@ -1,0 +1,4 @@
+{% load markup %}
+
+<h3 class="title"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a> <a href="{{ item.get_internal_url }}">#</a></h3>
+<div class="body">{{ item.body|markdown|truncatewords_html:"140" }}</div>

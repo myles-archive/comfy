@@ -1,0 +1,26 @@
+{% extends "comfy_admin/base.html" %}
+
+{% load couchdb humanize %}
+
+{% block content_title %}
+	<h2>Posts</h2>
+{% endblock %}
+
+{% block content %}
+	<table border="0">
+		<tr>
+			<th>Title</th>
+			<th>Published</th>
+			<th>Author</th>
+			<th>Comments Count</th>
+		</tr>
+		{% for post in posts %}
+			<tr id="{{ post.id }}">
+				<th><a href="{{ post.id }}">{{ post.title }}</a></th>
+				<td>{{ post.published|convert_date|naturalday|title }}</td>
+				<td>{% if post.author.name %}<a href="mailto:{{ post.author.email }}">{{ post.author.name }}</a>{% endif %}</td>
+				<td>{{ post.comment_count }}
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

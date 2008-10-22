@@ -20,6 +20,10 @@ urlpatterns += patterns('comfy.contrib.admin.views.blog',
 		view	= 'index',
 		name	= 'comfy_admin_blog'
 	),
+	url(r'^blog/posts/$',
+		view	= 'post_list',
+		name	= 'comfy_admin_blog_post_list'
+	),
 	url(r'^blog/posts/add/$',
 		view	= 'post_add_edit',
 		name	= 'comfy_admin_blog_post_add'

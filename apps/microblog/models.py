@@ -5,7 +5,9 @@ from django.conf import settings
 
 from comfy.apps.microblog import signals
 
-db = settings.COUCHDB
+from comfy.core.couchdb import Database
+
+db = Database 
 
 class Micro(schema.Document):
 	type = schema.TextField(default='MicroBlog')
@@ -35,4 +37,4 @@ class Micro(schema.Document):
 		if update_timestamp or not self.modified:
 			self.modified = datetime.now()
 		schema.Document.store(self, db)
-		micro_stored.send(sender=__class__)
+		micro_stored.send(sender=self)

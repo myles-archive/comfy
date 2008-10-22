@@ -1,0 +1,39 @@
+{% extends "bookmarks/base_bookmarks.html" %}
+{% load i18n markup couchdb humanize %}
+
+{% block title %}{{ block.super }}: Bookmark - {{ bookmark.title }}{% endblock %}
+
+{% block head %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+
+{% block content %}
+	<div id="bookmark-{{ bookmark.id }}">
+		<h3><a href="{{ bookmark.get_absolute_url }}">{{ bookmark.title }}</a> <a href="{{ bookmark.get_internal_url }}">#</a></h3>
+		{% if bookmark.body %}{{ bookmark.body|markdown }}{% endif %}
+		<p class="tags" style="float:right;">{% for tag in bookmark.tags %}<span class="tag">{{ tag }}</span> {% endfor %}</p>
+		
+		<div id="comments">
+			<a name="comments"></a>
+			{% if bookmark.comments %}
+				<h3>{% trans "Comments" %}</h3>
+				{% for comment in bookmark.comments %}
+					<div class="comment">
+						<h4 class="name"><a name="c{{ forloop.counter }}" href="#c{{ forloop.counter }}">{{ forloop.counter }}</a> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> says...</h4>
+						{{ comment.comment|urlizetrunc:"60" }}
+						<p class="date alt">{% trans "Posted on " %}{{ comment.time|convert_datetime|naturalday|title }}</p>
+					</div>
+					<hr>
+				{% endfor %}
+			{% endif %}
+			
+			{% if bookmark.allow_comments %}
+				<form action="{% url post_comment %}" method="post" accept-charset="utf-8">
+					<fieldset>
+						<legend>{% trans "Post a comment" %}</legend>
+						{{ comment_form.as_p }}
+						<p><input type="submit" value="{% trans "Post Comment" %}"></p>
+					</fieldset>
+				</form>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
