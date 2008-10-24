@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+FullTextSearch.py
+
+Created by Rui Carmo on 2007-02-19.
+Published under the MIT license.
+"""
+
+import yaki.Engine, yaki.Store
+from yaki.Utils import *
+from BeautifulSoup import *
+import re, md5
+
+class FullTextSearchWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    self.bound = 20
+    self.webapp = webapp
+    self.ac = webapp.getContext()
+    self.i18n = yaki.Locale.i18n[self.ac.locale]
+    registry.register('markup',self, 'plugin','FullTextSearch')
+
+  def run(self, serial, tag, tagname, pagename, soup, request, response):  
+    buffer = self.i18n['no_search']
+    q = request.getParameter('q', default=None)
+    if q == None:
+      tag.replaceWith(buffer)
+      return False
+
+    q = q.strip()
+    hits = self.ac.indexer.search(q)
+    if hits == None:
+      tag.replaceWith('<div class="warning">%s</div>' % self.i18n['search_disabled'])    
+      return False
+
+    words = ' AND '.join(q.split(' '))
+    buffer = '%s <b>"%s"</b>.' % (self.i18n['no_results'], words)
+    if len(hits.keys()) > 0:
+      recent = hits.keys()
+      recent.sort(lambda x, y: cmp(hits[y]['last-modified'],hits[x]['last-modified']))
+      recent = recent[:self.bound]      
+      buffer = "<p>%s <b>%s:</b></p><table><tr><th>%s</th><th>%s</th></tr><tbody>" % (self.i18n['search_results'], words, self.i18n['Page'], self.i18n['Modified'])
+      for i in recent:
+        hit = hits[i]
+        buffer = buffer + """<tr><td><a href="%s">%s</a></td><td>%s</td></tr>""" % (self.ac.base + i, hit['title'], self.i18n['updated_ago_format'] % timeSince(self.i18n,hit['last-modified']))
+      buffer = buffer + "</tbody></table>"
+    tag.replaceWith(buffer)

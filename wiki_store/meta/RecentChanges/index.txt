@@ -1,0 +1,7 @@
+From: Rui Carmo
+Title: Recent Changes
+Content-Type: text/html
+X-Index: No
+X-Cache-Control: max-age=300
+
+<plugin name="recentchanges"/>

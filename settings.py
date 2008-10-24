@@ -85,6 +85,8 @@ INSTALLED_APPS = (
 	'comfy.apps.talks',
 	'comfy.apps.notes',
 	'comfy.apps.bookmarks',
+	'comfy.apps.events',
+	'comfy.apps.wiki',
 	'comfy.contrib.search',
 	'comfy.contrib.comments',
 	'comfy.contrib.utils',

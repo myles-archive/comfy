@@ -1,0 +1,60 @@
+From: Rui Carmo
+Date: Wed, 25 Jun 2003 23:44:55 GMT
+Title: Inter-Wiki Map
+Tags: meta
+Content-Type: text/x-textile
+
+h1. Other Wikis
+
+<pre>
+43F http://wiki.43folders.com/index.php/
+CocoaWiki http://www.cocoadev.com/index.pl?
+Fedora http://fedoraproject.org/wiki/
+Litux http://www.litux.org/wiki/
+Tao http://the.taoofmac.com/space/
+</pre>
+
+h1. Telco References
+
+<pre>
+3GPP http://the.taoofmac.com/3gpp_redirect.php?spec=
+ISO http://www.iso.org/iso/en/CombinedQueryResult.CombinedQueryResult?queryString=
+RFC http://www.faqs.org/rfcs/rfc
+VoIP http://www.voip-info.org/tiki-index.php?page=
+</pre>
+
+h1. Generic References
+
+<pre>
+Acronym http://www.acronymfinder.com/af-query.asp?String=exact&Acronym=
+Dictionary http://www.dictionary.com/cgi-bin/dict.pl?term=
+IMDB http://us.imdb.com/Title?
+ISBN http://www.amazon.co.uk/exec/obidos/ASIN/
+JargonFile http://sunir.org/apps/meta.pl?wiki=JargonFile&redirect=
+Thesaurus http://www.thesaurus.com/cgi-bin/search?config=roget&words=
+Wikipedia http://en.wikipedia.org/wiki/
+Wiktionary http://en.wiktionary.org/wiki/
+</pre>
+
+h1. Web Services
+
+<pre>
+Geo http://maps.google.com/maps?t=k&q=
+GoogleGroups http://groups.google.com/groups?q=
+Google http://www.google.com/search?q=
+Technorati http://www.technorati.com/search/
+</pre>
+
+h1. Coding
+
+<pre>
+CPAN http://search.cpan.org/search?query=
+FreshMeat http://freshmeat.net/
+Perl http://search.cpan.org/search?query=
+php-function http://www.php.net/manual/en/function.%s.php
+php-lookup http://www.php.net/manual-lookup.php?pattern=
+PEP http://www.python.org/dev/peps/pep-0
+PythonInfo http://www.python.org/cgi-bin/moinmoin/
+Radar rdar://problem/
+SourceForge http://sourceforge.net/
+</pre>

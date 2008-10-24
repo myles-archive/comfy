@@ -1,0 +1,11 @@
+{% extends "wiki/base_wiki.html" %}
+
+{% block title %}{{ block.super }}: {{ headers.title }}{% endblock %}
+
+{% block content_title %}
+	<h2>{{ headers.title }}</h2>
+{% endblock %}
+
+{% block content %}
+	{{ render }}
+{% endblock %}

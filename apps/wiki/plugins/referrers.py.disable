@@ -1,0 +1,18 @@
+import yaki.Engine, yaki.Store
+from BeautifulSoup import *
+
+try:
+  import cPickle as pickle
+except ImportError:
+  import pickle # fall back on Python version
+
+class ReferrersWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    registry.register('markup',self, 'plugin','referrers')
+    self.context = webapp.getContext()
+    self.cache = self.context.cache
+  
+  def run(self, serial, tag, tagname, pagename, soup, request, response):
+    buffer = []
+    tag.replaceWith(''.join(buffer))
+

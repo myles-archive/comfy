@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 	(r'^bookmarks/', include('comfy.apps.bookmarks.urls')),
 	(r'^tumblelog/', include('comfy.apps.tumblelog.urls')),
 	(r'^tags/', include('comfy.contrib.tags.urls')),
+	(r'^wiki/', include('comfy.apps.wiki.urls')),
 	
 	(r'^r/', include('comfy.contrib.redirects.urls')),
 	(r'^admin/', include('comfy.contrib.admin.urls')),

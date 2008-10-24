@@ -1,0 +1,76 @@
+import yaki.Engine, yaki.Store
+from yaki.Utils import *
+from BeautifulSoup import *
+import re, md5, urlparse
+
+try:
+  import cPickle as pickle
+except ImportError:
+  import pickle # fall back on Python version
+
+class AttachmentsWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    self.webapp = webapp
+    registry.register('markup',self, 'plugin','Attachments')
+
+  def run(self, serial, tag, tagname, pagename, soup, request, response):  
+    c = self.webapp.getContext()
+    headers = {}
+    try:
+      headers = pickle.loads(c.cache['headers:'+pagename].encode('utf-8'))
+    except:
+      pass
+    if 'x-attachments' in headers.keys():
+      attachments = [name.strip() for name in headers['x-attachments'].split(',')]
+      buffer = '<ul>'
+      for i in attachments:
+        buffer = buffer + '<li><a href="cid:%s">%s</a></li>' % (i,i)
+      buffer = buffer + '</ul>'
+      tag.replaceWith(BeautifulSoup(buffer))
+      return
+    tag.replaceWith('')
+  
+class AttachedImagesWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    self.webapp = webapp
+    registry.register('markup',self, 'img','attach')
+
+  def run(self, serial, tag, tagname, pagename, soup, request, response):
+    try:
+      uri = tag['src']
+    except KeyError:
+      return True
+
+    # Try to handle the uri as a schema/path pair
+    (schema,netloc,path,parameters,query,fragment) = urlparse.urlparse(uri)
+    
+    if schema.lower() in ATTACHMENT_SCHEMAS:
+      c = self.webapp.getContext()
+      tag['src'] = unicode(c.media + pagename + "/" + path)
+      # No further processing is required
+      return False
+    return True
+      
+
+class LinkToAttachmentsWikiPlugin(yaki.Engine.WikiPlugin):
+    def __init__(self, registry, webapp):
+      self.webapp = webapp
+      registry.register('markup',self, 'a','attachlink')
+
+    def run(self, serial, tag, tagname, pagename, soup, request, response):
+      try:
+        uri = tag['href']
+      except KeyError:
+        return True
+
+      # Try to handle the uri as a schema/path pair
+      (schema,netloc,path,parameters,query,fragment) = urlparse.urlparse(uri)
+
+      if schema.lower() in ATTACHMENT_SCHEMAS:
+        c = self.webapp.getContext()
+        tag['href'] = c.media + pagename + "/" + path
+        tag['style'] = 'attachment'
+        tag['title'] = 'link to attached file %s' % path
+        # No further processing is required
+        return False
+      return True

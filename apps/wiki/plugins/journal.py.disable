@@ -1,0 +1,88 @@
+import yaki.Engine, yaki.Store, yaki.Locale
+from yaki.Utils import *
+from BeautifulSoup import *
+import re, md5, urlparse, time, cgi
+
+class JournalWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    registry.register('markup',self, 'plugin','Journal')
+    self.webapp = webapp
+    self.context = webapp.getContext()
+    self.i18n = yaki.Locale.i18n[self.context.locale]
+
+  def run(self, serial, tag, tagname, pagename, soup, request, response): 
+    ac = self.context
+    c = request.getContext()
+    # define how many blog entries to show
+    try:
+      bound = int(tag['limit'])
+    except:
+      bound = 12
+    # filter for the blog namespace
+    mask = re.compile('^(blog|links)\/(\d+){4}\/(\d+){2}\/(\d+){2}.*')
+    # this is what entries ought to look like, ideally
+    canon = "0000/00/00/0000"
+    
+    # find entries. 
+    # We use the indexer's allpages here because that's updated upon server start
+    # ...and because we want to do our own sorting anyway.
+    paths = [path for path in self.context.indexer.allpages if mask.match(path)]
+    # canonize paths
+    entries = {}
+    for i in paths:
+      (prefix, path) = i.split("/",1)
+      l = len(path)
+      p = len(prefix)+1
+      k = len(canon)
+      # add an hex digest in case there are multiple entries at the same time
+      if l < k:
+        entries[i[p:l+p] + canon[-(k-l):] + md5.new(i).hexdigest()] = i
+      else:
+        entries[i[p:] + md5.new(i).hexdigest()] = i
+
+    journal = entries.keys()
+    journal.sort()
+    journal.reverse()
+    journal = journal[:bound]
+    posts = []
+    prevdate = ""
+    for i in journal:
+      dateheading = i[:10]
+      if dateheading != prevdate:
+        date = time.strptime(dateheading, '%Y/%m/%d')
+        # trickery to replace leading zero in month day
+        mday    = time.strftime(" %d",date).replace(" 0"," ").strip()
+        weekday = self.i18n[time.strftime("%A",date)]
+        month   = self.i18n[time.strftime("%B", date)]
+        year    = time.strftime("%Y", date) 
+        posts.append('<h3 class="dateheading">%s</h3>' % (self.i18n['journal_date_format'] % locals()))
+        prevdate = dateheading
+      name = entries[i]
+      page = ac.store.getRevision(name)
+      headers = page.headers
+      path = ac.base + name
+      permalink = path
+      linkclass = "wikilink"
+      description = "permanent link to this entry"
+      if 'x-link' in headers.keys():
+        link = uri = headers['x-link']
+        (schema,netloc,path,parameters,query,fragment) = urlparse.urlparse(uri)
+        if schema in self.i18n['uri_schemas'].keys():
+          linkclass   = self.i18n['uri_schemas'][schema]['class']
+          description = "external link to %s" % cgi.escape(uri)
+      posttitle = headers['title']
+      content = yaki.Engine.renderPage(self.context,page)
+      postinfo = yaki.Engine.renderInfo(self.i18n,headers)
+      # Generate c.comments
+      formatComments(ac,request,name)
+      comments = c.comments
+      try:
+        tags = headers['tags']
+      except:
+        tags = ""
+      
+      if 'links' in name:
+        posts.append(ac.templates['linkblog'] % locals())
+      else:
+        posts.append(ac.templates['generic'] % locals())
+    tag.replaceWith(''.join(posts))

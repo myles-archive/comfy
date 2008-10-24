@@ -1,0 +1,25 @@
+From: Rui Carmo
+Title: Acronym Table
+Tags: meta
+Content-Type: text/x-textile
+
+h1. Generic Acronyms
+
+<pre>
+BLT Bacon, Lettuce and Tomato
+TLA Three-Letter Acronym
+TOC Table Of Contents
+</pre>
+
+h1. Technical Acronyms
+
+<pre>
+CSS Cascading Style Sheets
+FTP File Transfer Protocol
+HTTP HyperText Transfer Protocol
+RFC Request For Comments
+RSS Real Simple Syndication
+SEO Search Engine Optimization
+USB Universal Serial Bus
+WYSIWYG What You See Is What You Get
+</pre>

@@ -1,0 +1,7 @@
+From: Rui Carmo
+Date: Wed, 25 Jun 2003 23:44:55 GMT
+Title: Empty Page
+Tags: meta
+Content-Type: text/html
+
+<h2>This page hasn't been written yet.</h2>

@@ -1,0 +1,9 @@
+From: Rui Carmo
+Title: Wanted Pages
+Date: 2007-04-07 21:02:13
+Content-Type: text/x-textile
+
+These pages are referenced in the "Wiki":Wiki but do not actually exist yet:
+
+<plugin name="WantedPages"/>
+

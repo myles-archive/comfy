@@ -1,0 +1,45 @@
+import yaki.Engine, yaki.Store
+import urlparse, re
+from BeautifulSoup import *
+
+class InterWikiPlugin(yaki.Engine.WikiPlugin):
+  def __init__(self, registry, webapp):
+    registry.register('markup',self, 'a','interwiki')
+    c = webapp.getContext()
+    self.schemas = {}
+    # load InterWikiMap
+    try:
+      page = c.store.getRevision('meta/InterWikiMap')
+    except:
+      print "WARNING: no meta/InterWikiMap definitions"
+      return
+    # prepare to parse only <pre> tags in it (so that we can have multiple maps organized by sections)
+    plaintext = SoupStrainer('pre', text=re.compile('.+'))
+    map = ''.join([text for text in BeautifulSoup(page.render(), parseOnlyThese=plaintext)])
+    # now that we have the full map, let's build the schema hash
+    lines = map.split('\n')
+    for line in lines:
+      try:
+        (schema, url) = line.split(' ',1)
+        self.schemas[schema.lower()] = url
+      except ValueError: # skip lines with more than two fields
+        pass
+  
+  def run(self, serial, tag, tagname, pagename, soup, request, response):
+    try:
+      url = tag['href']
+    except KeyError:
+      return True
+    try:      
+      (schema, link) = url.split(':',1)
+    except ValueError:
+      return False
+    schema = schema.lower()
+    if schema in self.schemas.keys():
+      uri = self.schemas[schema] + link
+      tag['href'] = uri
+      (schema,netloc,path,parameters,query,fragment) = urlparse.urlparse(uri)
+      tag['title'] = "link to %s on %s" % (link, netloc)
+      tag['class'] = "interwiki"
+      # this tag does not need to be re-processed
+      return False
