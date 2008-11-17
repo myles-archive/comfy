@@ -117,47 +117,49 @@ __history__ = """
 2.0.11-rcarmo 2007/01/19 - Rui Carmo - added plugin tag
 """
 
+from django.conf import settings
+
 # Set your encoding here.
-ENCODING = 'utf-8'
+ENCODING = getattr(settings, 'TEXTILE_ENCODING', 'utf-8')
 
 # Output? Non-ASCII characters will be automatically
 # converted to XML entities if you choose ASCII.
-OUTPUT = 'utf-8'
+OUTPUT = getattr(settings, 'TEXTILE_OUTPUT', 'utf-8')
 
 # PyTextile can optionally validate the generated
 # XHTML code. We can use either mxTidy or uTidyLib.
 # You can change the default behaviour here.
-VALIDATE = 0
+VALIDATE = getattr(settings, 'TEXTILE_VALIDATE', 0)
 
 # If you want h1. to be translated to something other
 # than <h1>, change this offset. You can also pass it
 # as an argument to textile().
-HEAD_OFFSET = 0
+HEAD_OFFSET = getattr(settings, 'TEXTILE_HEAD_OFFSET', 0)
 
 # If you want to use itex2mml, specify the full path
 # to the binary here. You can download it from here:
 # http://golem.ph.utexas.edu/~distler/blog/files/itexToMML.tar.gz
-itex2mml = None
+itex2mml = getattr(settings, 'TEXTILE_ITEX2MML', None)
 #itex2mml = '/usr/local/bin/itex2MML'
 #itex2mml = '/usr/people/almeida/bin/itex2MML'
 
 # PyTextile can optionally sanitize the generated XHTML,
 # which is good for weblog comments or if you don't trust
 # yourself.
-SANITIZE = 1
+SANITIZE = getattr(settings, 'TEXTILE_SANITIZE', 1)
 
 # Turn debug on?
-DEBUGLEVEL = 0
+DEBUGLEVEL = getattr(settings, 'TEXTILE_DEBUG_LEVEL', 0)
 
 # Amazon associate for links: "keywords":amazon
 # If you don't have one, please consider leaving mine here as
 # a small compensation for writing PyTextile. It's commented
 # off as default.
 #amazon_associate_id = 'bomtempo-21'
-amazon_associate_id = None 
+amazon_associate_id = getattr(settings, 'TEXTILE_AMAZON_ASSOCIATE_ID', None) 
 
 #AMAZON = 'www.amazon.co.uk'
-AMAZON = 'www.amazon.com'
+AMAZON = getattr(settings, 'TEXTILE_AMAZON_URL', 'www.amazon.com')
 
 import re
 import sys

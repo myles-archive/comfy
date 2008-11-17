@@ -17,8 +17,15 @@ from django.utils.encoding import smart_str, force_unicode
 from django.utils.safestring import mark_safe
 
 from docutils.core import publish_parts as rst
-from comfy.contrib.markup import textile
-from comfy.contrib.markup import pymarkdown
+try:
+	import textile
+except ImportError:
+	from comfy.contrib.markup import textile
+
+try:
+	import pymarkdown
+except ImportError:
+	from comfy.contrib.markup import pymarkdown
 
 # helper functions for rendering
 

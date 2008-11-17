@@ -22,7 +22,7 @@ def pagetrail(i18n, trail, linkclass = "wiki"):
     i18n['updated_ago_format'] % timeSince(i18n, crumb['last-modified']), crumb['title']))
   return ''.join(buffer)[:-2]
 
-def technoratiTags(headers,soup):
+def technoratiTags(headers, soup):
   """
   Build a div containing Technorati-style "tags" from the Wiki links and other page metadata
   """

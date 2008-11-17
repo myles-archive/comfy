@@ -15,23 +15,25 @@ from comfy.apps.wiki.settings import YAKI_EMPTY_PAGE, YAKI_HOME_PAGE
 
 store = Store(settings.YAKI_STORE_DIR)
 
-
 def page(request, path=YAKI_HOME_PAGE):
 	try:
 		page = store.getRevision(urllib.unquote(path))
 	except IOError:
 		page = store.getRevision(YAKI_EMPTY_PAGE)
 	
-	plugins = PluginRegistry()
-	soup = BeautifulSoup(page.render(), selfClosingTags=['plugin'], convertEntities=['html','xml'])
-	for tag in soup('plugin'):
-		plugins.run(tag, 'plugin', page.headers['name'], soup)
-	plugins.runForAllTags(page.headers['name'], soup)
+	# plugins = PluginRegistry()
+	# soup = BeautifulSoup(page.render(), selfClosingTags=['plugin'], convertEntities=['html','xml'])
+	# for tag in soup('plugin'):
+	# 	plugins.run(tag, 'plugin', page.headers['name'], soup)
+	# plugins.runForAllTags(page.headers['name'], soup)
 	
 	context = {
 		'path':		path,
-		'render':	mark_safe(force_unicode(soup.renderContents())),
+		# 'render':	mark_safe(force_unicode(soup.renderContents())),
+		'render':	page.render(),
 		'headers':	page.headers,
 	}
 	
-	return render_to_response('wiki/page.html', context, context_instance=RequestContext(request))
+	response = render_to_response('wiki/page.html', context, context_instance=RequestContext(request))
+	
+	return response

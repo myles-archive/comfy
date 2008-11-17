@@ -9,8 +9,10 @@ from django.template import RequestContext
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.syndication.views import feed as render_feed
 
 from comfy.apps.blog.models import Post
+from comfy.apps.blog.feeds import *
 from comfy.contrib.comments.forms import CommentForm
 
 # db = settings.COUCHDB
@@ -146,3 +148,15 @@ def detail(request, year, month, day, slug):
 	}
 	
 	return render_to_response('blog/detail.html', context, context_instance=RequestContext(request))
+
+
+## Feeds
+
+feed_dict = {
+	'by_post':	PostComments,
+}
+
+def detail_feed_comments(request, year, month, day, slug):
+	posts = list(Post.by_slug()[(int(year), int(month), int(day), slug)])
+	post = posts[0]
+	return render_feed(request=request, url='by_post/%s' % post.id, feed_dict=feed_dict)
